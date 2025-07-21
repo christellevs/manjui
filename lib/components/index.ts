@@ -1,5 +1,6 @@
 import Btn from './Btn.vue';
 import Circle from './Circle.vue';
+import Divider from './Divider.vue';
 import HGroup from './HGroup.vue';
 import HStack from './HStack.vue';
 import Icon from './Icon.vue';
@@ -18,6 +19,7 @@ import VGroup from './VGroup.vue';
 export {
     Btn,
     Circle,
+    Divider,
     HGroup,
     HStack,
     Icon,

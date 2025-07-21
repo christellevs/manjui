@@ -4,14 +4,16 @@
     "description": "Vue UI library & design system based on Nightshade UI (nightshade)",
     "type": "module",
     "exports": {
-        ".": "./dist/bundle.js",
-        "./components": "./dist/components.js",
-        "./components.css": "./dist/components.css",
-        "./utils": "./dist/utils.js",
-        "./stylesheets/components.css": "./dist/components.css",
-        "./stylesheets/*": "./dist/*"
+        ".": "./lib/index.js",
+        "./components": "./lib/components/index.js",
+        "./utils": "./lib/utils/index.js",
+        "./stylesheets/*": "./stylesheets/*",
+        "./dist": "./dist/bundle.js",
+        "./dist/components": "./dist/components.js",
+        "./dist/components.css": "./dist/components.css"
     },
     "files": [
+        "lib",
         "dist",
         "stylesheets"
     ],

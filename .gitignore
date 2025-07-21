@@ -14,3 +14,8 @@ out/
 .dev
 *.tsbuildinfo
 dist/
+lib/**/*.js
+lib/**/*.d.ts
+lib/**/*.js.map
+
+claude.md

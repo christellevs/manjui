@@ -27,7 +27,14 @@
     "author": "Christelle Van Sebroeck based on work by Boris Okunskiy (@inca)",
     "license": "ISC",
     "peerDependencies": {
-        "vue": "^3.5.13"
+        "vue": "^3.5.13",
+        "vue-router": "^4.0.0"
+    },
+    "dependencies": {
+        "mesh-config": "^1.2.1",
+        "mesh-decorators": "^1.1.2",
+        "mesh-ioc": "^4.1.0",
+        "nanoevent": "^1.0.0"
     },
     "devDependencies": {
         "@fortawesome/fontawesome-free": "^6.7.2",

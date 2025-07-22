@@ -2,9 +2,12 @@
 
 Vue UI library & design system based on Nightshade UI ([nightshade](https://www.npmjs.com/package/nightshade)).
 
-Adds blocks and sections to the library to experiment with quicker landing page and website building.
-
-These add ons are very experimental and still under development. So please use at your own risk.
+Manjui is a complete Vue 3 framework that includes:
+- **UI Components**: Reusable Vue components with consistent styling
+- **Application Framework**: BaseApp class with dependency injection using mesh-ioc
+- **Router Management**: BaseRouter abstraction for Vue Router
+- **Theme Management**: Light/dark mode switching with CSS custom properties
+- **Utility Classes**: Loader, DomEventProxy, and other helpful abstractions
 
 ## Installation
 
@@ -31,22 +34,62 @@ npm install
 
 ## Usage
 
-### 1. Import Components and Styles
+### 1. Simple Component Usage
 
 ```javascript
-// In your main app file (e.g., app.ts or main.ts)
-import * as manjuiComponents from 'manjui';
-
 // Import manjui styles
 import 'manjui/stylesheets/variables.css';
 import 'manjui/stylesheets/baseline.css';
 
-// Register components globally (Vue 3 example)
+// Import and use components
+import { createApp } from 'vue';
+import { components } from 'manjui';
+
 const app = createApp(App);
 
-for (const [name, component] of Object.entries(manjuiComponents.components || {})) {
+// Register components globally
+for (const [name, component] of Object.entries(components)) {
     app.component(name, component);
 }
+```
+
+### 1. Complete Application Framework
+
+For a full application with routing, dependency injection, and theme management:
+
+```javascript
+import { BaseApp, BaseRouter } from 'manjui';
+import { createApp } from 'vue';
+import { createRouter, createWebHistory } from 'vue-router';
+
+// Create your router class
+class AppRouter extends BaseRouter {
+    createRouter() {
+        return createRouter({
+            history: createWebHistory(),
+            routes: [
+                { path: '/', component: HomePage },
+                { path: '/about', component: AboutPage },
+            ],
+        });
+    }
+}
+
+// Create your app class
+class App extends BaseApp {
+    constructor() {
+        const vue = createApp(RootComponent);
+        super(vue);
+        
+        // Register your router
+        this.mesh.service(AppRouter);
+        this.mesh.alias(BaseRouter, AppRouter);
+    }
+}
+
+// Start the app
+const app = new App();
+app.start();
 ```
 
 ### 2. Use Components in Templates

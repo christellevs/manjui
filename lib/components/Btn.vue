@@ -21,9 +21,12 @@
         :disabled="disabled || blocked"
         :title="title ?? label"
         :href="href"
+        @click="createRipple($event)"
         @uiactivate="onUiActivate($event)"
         @mouseenter="hover = true"
         @mouseleave="hover = false">
+
+        <span class="Btn-ripple-container"></span>
 
         <slot
             name="icon"
@@ -103,6 +106,30 @@ export default {
             }
         },
 
+        createRipple(event) {
+            if (this.disabled || this.blocked) return;
+            
+            const button = this.$refs.button;
+            const rippleContainer = button.querySelector('.Btn-ripple-container');
+            const rect = button.getBoundingClientRect();
+            
+            const ripple = document.createElement('span');
+            ripple.className = 'Btn-ripple';
+            
+            const diameter = Math.max(rect.width, rect.height);
+            const radius = diameter / 2;
+            
+            ripple.style.width = ripple.style.height = `${diameter}px`;
+            ripple.style.left = `${event.clientX - rect.left - radius}px`;
+            ripple.style.top = `${event.clientY - rect.top - radius}px`;
+            
+            rippleContainer.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        },
+
     }
 
 };
@@ -110,77 +137,128 @@ export default {
 
 <style scoped>
 .Btn {
-    --Btn-padding: var(--sp1-5);
+    --Btn-padding: var(--sp2);
     --Btn-gap: var(--sp);
     --Btn-size: var(--input-size);
     --Btn-font-size: var(--font-size);
 
     --Btn-text-color: inherit;
-    --Btn-outline-color: transparent;
-    --Btn-outline-color-effective: transparent;
-    --Btn-outline-color-focus: var(--color-primary);
-    --Btn-surface-top: transparent;
-    --Btn-surface-bottom: transparent;
-    --Btn-shadow-color: transparent;
+    --Btn-bg-color: transparent;
     --Btn-border-radius: var(--border-radius);
+    
+    /* Material elevation shadows */
+    --elevation-0: none;
+    --elevation-1: 0 2px 1px -1px hsla(0, 0%, 0%, 0.2), 
+                   0 1px 1px 0 hsla(0, 0%, 0%, 0.14), 
+                   0 1px 3px 0 hsla(0, 0%, 0%, 0.12);
+    --elevation-2: 0 3px 1px -2px hsla(0, 0%, 0%, 0.2), 
+                   0 2px 2px 0 hsla(0, 0%, 0%, 0.14), 
+                   0 1px 5px 0 hsla(0, 0%, 0%, 0.12);
+    --elevation-3: 0 3px 3px -2px hsla(0, 0%, 0%, 0.2), 
+                   0 3px 4px 0 hsla(0, 0%, 0%, 0.14), 
+                   0 1px 8px 0 hsla(0, 0%, 0%, 0.12);
+    --elevation-4: 0 2px 4px -1px hsla(0, 0%, 0%, 0.2), 
+                   0 4px 5px 0 hsla(0, 0%, 0%, 0.14), 
+                   0 1px 10px 0 hsla(0, 0%, 0%, 0.12);
+    --elevation-6: 0 3px 5px -1px hsla(0, 0%, 0%, 0.2), 
+                   0 6px 10px 0 hsla(0, 0%, 0%, 0.14), 
+                   0 1px 18px 0 hsla(0, 0%, 0%, 0.12);
+    --elevation-8: 0 5px 5px -3px hsla(0, 0%, 0%, 0.2), 
+                   0 8px 10px 1px hsla(0, 0%, 0%, 0.14), 
+                   0 3px 14px 2px hsla(0, 0%, 0%, 0.12);
 
     -webkit-appearance: none;
     appearance: none;
 
     position: relative;
-    z-index: 1;
     margin: 0;
     padding: 0 var(--Btn-padding);
     height: var(--Btn-size);
     line-height: var(--Btn-size);
+    min-width: calc(var(--Btn-size) * 2);
     box-sizing: border-box;
 
     display: inline-flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     flex-shrink: 0;
     gap: var(--Btn-gap);
 
-    border: 0;
+    border: none;
     border-radius: var(--Btn-border-radius);
     cursor: pointer;
     user-select: none;
     overflow: hidden;
+    vertical-align: middle;
 
-    font-family: inherit;
+    font-family: var(--font-main);
     font-size: var(--Btn-font-size);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
 
     color: var(--Btn-text-color);
-    outline: 2px solid var(--Btn-outline-color-effective);
+    background-color: var(--Btn-bg-color);
+    box-shadow: var(--elevation-2);
 
-    background: radial-gradient(
-        120% 150% at 80% 0%,
-        var(--Btn-surface-top),
-        var(--Btn-surface-bottom)
-    );
-    background-clip: padding-box;
-
-    transition: color .3s, outline .3s, filter .3s, border-radius .3s;
+    transition: 
+        background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.Btn:focus, .Btn:active, .Btn:hover {
-    transition: none;
+/* Ripple container */
+.Btn-ripple-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    border-radius: inherit;
+    pointer-events: none;
 }
 
+/* Ripple effect */
+.Btn-ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, hsla(0, 0%, 100%, 0.3) 0%, transparent 70%);
+    transform: scale(0);
+    animation: ripple-animation 0.6s ease-out;
+    pointer-events: none;
+}
+
+@keyframes ripple-animation {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* Hover state */
 .Btn:not(:disabled):hover, .Btn.Btn-pseudo-hover {
-    filter: brightness(1.07);
+    box-shadow: var(--elevation-4);
 }
 
-.Btn:not(:disabled):focus, .Btn.Btn-pseudo-focus {
-    z-index: 10;
-    --Btn-outline-color-effective: var(--Btn-outline-color-focus);
+/* Focus state - Material style focus */
+.Btn:not(:disabled):focus-visible, .Btn.Btn-pseudo-focus {
+    outline: none;
+    box-shadow: var(--elevation-3);
 }
 
+.Btn:not(:disabled):focus-visible::after {
+    content: '';
+    position: absolute;
+    inset: calc(var(--sp0-5) * -1);
+    border-radius: calc(var(--Btn-border-radius) + var(--sp0-5));
+    border: 2px solid var(--Btn-focus-color, var(--color-primary-focus));
+    pointer-events: none;
+}
+
+/* Active state */
 .Btn:not(:disabled):active, .Btn.Btn-pseudo-active {
-    padding-top: 1px;
-    box-shadow:
-        0 6px 12px rgba(0,0,0,.08) inset,
-        0 1px 2px rgba(0,0,0,.12) inset;
+    box-shadow: var(--elevation-8);
 }
 
 .Label {
@@ -206,13 +284,14 @@ export default {
 }
 
 .Btn-round {
-    --Btn-border-radius: var(--border-radius-round);
+    --Btn-border-radius: calc(var(--Btn-size) / 2);
 }
 
 .Btn-disabled {
-    opacity: .64;
-    filter: saturate(40%);
+    opacity: .38;
     cursor: not-allowed;
+    box-shadow: none !important;
+    pointer-events: none;
 }
 
 .Btn-block {
@@ -225,18 +304,18 @@ export default {
     --Btn-outline-color-effective: var(--Btn-outline-color);
 }
 
-/* Sizes */
+/* Sizes - Using design system variables */
 
 .Btn-large {
     --Btn-size: var(--input-size-large);
     --Btn-font-size: var(--font-size-large);
-    --Btn-padding: var(--sp2);
+    --Btn-padding: var(--sp3);
 }
 
 .Btn-small {
     --Btn-size: var(--input-size-small);
     --Btn-font-size: var(--font-size-small);
-    --Btn-padding: var(--sp);
+    --Btn-padding: var(--sp1-5);
     --Btn-gap: var(--sp0-5);
 }
 
@@ -244,120 +323,206 @@ export default {
     order: 100;
 }
 
-/* Kinds */
+/* Kinds - Material Design style */
 
 .Btn-default {
-    --Btn-text-color: var(--color-default-text);
-    --Btn-surface-top: var(--color-default-surface-top);
-    --Btn-surface-bottom: var(--color-default-surface-bottom);
-    --Btn-surface-top-hover: var(--color-default-surface-top-hover);
-    --Btn-surface-bottom-hover: var(--color-default-surface-bottom-hover);
-    --Btn-outline-color: var(--color-default-outline);
-    --Btn-outline-color-focus: var(--color-default-focus);
-    --Btn-shadow-color: var(--color-default-shadow);
+    --Btn-text-color: var(--color-text-0);
+    --Btn-bg-color: var(--color-base-1);
+    --Btn-focus-color: var(--color-text-2);
+}
+
+.Btn-default:not(:disabled):hover {
+    --Btn-bg-color: var(--color-base-2);
 }
 
 .Btn-primary {
     --Btn-text-color: var(--color-primary-text);
-    --Btn-surface-top: var(--color-primary-surface-top);
-    --Btn-surface-bottom: var(--color-primary-surface-bottom);
-    --Btn-surface-top-hover: var(--color-primary-surface-top-hover);
-    --Btn-surface-bottom-hover: var(--color-primary-surface-bottom-hover);
-    --Btn-outline-color: var(--color-primary-outline);
-    --Btn-outline-color-focus: var(--color-primary-focus);
-    --Btn-shadow-color: var(--color-primary-shadow);
+    --Btn-bg-color: var(--color-primary-2);
+    --Btn-focus-color: var(--color-primary-0);
+}
+
+.Btn-primary .Btn-ripple {
+    background: radial-gradient(circle, hsla(310deg, 64%, 90%, 0.4) 0%, transparent 70%);
+}
+
+.Btn-primary:not(:disabled):hover {
+    --Btn-bg-color: var(--color-primary-3);
 }
 
 .Btn-secondary {
     --Btn-text-color: var(--color-secondary-text);
-    --Btn-surface-top: var(--color-secondary-surface-top);
-    --Btn-surface-bottom: var(--color-secondary-surface-bottom);
-    --Btn-surface-top-hover: var(--color-secondary-surface-top-hover);
-    --Btn-surface-bottom-hover: var(--color-secondary-surface-bottom-hover);
-    --Btn-outline-color: var(--color-secondary-outline);
-    --Btn-outline-color-focus: var(--color-secondary-focus);
-    --Btn-shadow-color: var(--color-secondary-shadow);
+    --Btn-bg-color: var(--color-secondary-2);
+    --Btn-focus-color: var(--color-secondary-0);
+}
+
+.Btn-secondary .Btn-ripple {
+    background: radial-gradient(circle, hsla(290deg, 50%, 90%, 0.4) 0%, transparent 70%);
+}
+
+.Btn-secondary:not(:disabled):hover {
+    --Btn-bg-color: var(--color-secondary-3);
 }
 
 .Btn-tertiary {
     --Btn-text-color: var(--color-tertiary-text);
-    --Btn-surface-top: var(--color-tertiary-surface-top);
-    --Btn-surface-bottom: var(--color-tertiary-surface-bottom);
-    --Btn-surface-top-hover: var(--color-tertiary-surface-top-hover);
-    --Btn-surface-bottom-hover: var(--color-tertiary-surface-bottom-hover);
-    --Btn-outline-color: var(--color-tertiary-outline);
-    --Btn-outline-color-focus: var(--color-tertiary-focus);
-    --Btn-shadow-color: var(--color-tertiary-shadow);
+    --Btn-bg-color: var(--color-tertiary-2);
+    --Btn-focus-color: var(--color-tertiary-0);
+}
+
+.Btn-tertiary .Btn-ripple {
+    background: radial-gradient(circle, hsla(176deg, 50%, 90%, 0.4) 0%, transparent 70%);
+}
+
+.Btn-tertiary:not(:disabled):hover {
+    --Btn-bg-color: var(--color-tertiary-3);
 }
 
 .Btn-success {
     --Btn-text-color: var(--color-success-text);
-    --Btn-surface-top: var(--color-success-surface-top);
-    --Btn-surface-bottom: var(--color-success-surface-bottom);
-    --Btn-surface-top-hover: var(--color-success-surface-top-hover);
-    --Btn-surface-bottom-hover: var(--color-success-surface-bottom-hover);
-    --Btn-outline-color: var(--color-success-outline);
-    --Btn-outline-color-focus: var(--color-success-focus);
-    --Btn-shadow-color: var(--color-success-shadow);
+    --Btn-bg-color: var(--color-success-2);
+    --Btn-focus-color: var(--color-success-0);
+}
+
+.Btn-success .Btn-ripple {
+    background: radial-gradient(circle, hsla(96deg, 60%, 90%, 0.4) 0%, transparent 70%);
+}
+
+.Btn-success:not(:disabled):hover {
+    --Btn-bg-color: var(--color-success-3);
 }
 
 .Btn-warning {
     --Btn-text-color: var(--color-warning-text);
-    --Btn-surface-top: var(--color-warning-surface-top);
-    --Btn-surface-bottom: var(--color-warning-surface-bottom);
-    --Btn-outline-color: var(--color-warning-outline);
-    --Btn-outline-color-focus: var(--color-warning-focus);
-    --Btn-shadow-color: var(--color-warning-shadow);
+    --Btn-bg-color: var(--color-warning-3);
+    --Btn-focus-color: var(--color-warning-0);
+}
+
+.Btn-warning .Btn-ripple {
+    background: radial-gradient(circle, hsla(48deg, 88%, 20%, 0.2) 0%, transparent 70%);
+}
+
+.Btn-warning:not(:disabled):hover {
+    --Btn-bg-color: var(--color-warning-2);
 }
 
 .Btn-danger {
     --Btn-text-color: var(--color-danger-text);
-    --Btn-surface-top: var(--color-danger-surface-top);
-    --Btn-surface-bottom: var(--color-danger-surface-bottom);
-    --Btn-outline-color: var(--color-danger-outline);
-    --Btn-outline-color-focus: var(--color-danger-focus);
-    --Btn-shadow-color: var(--color-danger-shadow);
+    --Btn-bg-color: var(--color-danger-2);
+    --Btn-focus-color: var(--color-danger-0);
+}
+
+.Btn-danger .Btn-ripple {
+    background: radial-gradient(circle, hsla(350deg, 88%, 90%, 0.4) 0%, transparent 70%);
+}
+
+.Btn-danger:not(:disabled):hover {
+    --Btn-bg-color: var(--color-danger-3);
+}
+
+/* Text/Link buttons - Material text button style */
+.Btn-link-default,
+.Btn-link-primary,
+.Btn-link-secondary,
+.Btn-link-tertiary,
+.Btn-link-success,
+.Btn-link-warning,
+.Btn-link-danger {
+    --Btn-bg-color: transparent;
+    box-shadow: none;
+}
+
+.Btn-link-default:not(:disabled):hover,
+.Btn-link-primary:not(:disabled):hover,
+.Btn-link-secondary:not(:disabled):hover,
+.Btn-link-tertiary:not(:disabled):hover,
+.Btn-link-success:not(:disabled):hover,
+.Btn-link-warning:not(:disabled):hover,
+.Btn-link-danger:not(:disabled):hover {
+    background-color: currentColor;
+    opacity: 0.08;
+    box-shadow: none;
 }
 
 .Btn-link-default {
-    --Btn-text-color: var(--color-default);
-    --Btn-outline-color: var(--color-default-outline);
-    --Btn-outline-color-focus: var(--color-default-focus);
+    --Btn-text-color: var(--color-text-0);
+    --Btn-focus-color: var(--color-text-1);
 }
 
 .Btn-link-primary {
-    --Btn-text-color: var(--color-primary);
-    --Btn-outline-color: var(--color-primary-outline);
-    --Btn-outline-color-focus: var(--color-primary-focus);
+    --Btn-text-color: var(--color-primary-2);
+    --Btn-focus-color: var(--color-primary-0);
 }
 
 .Btn-link-secondary {
-    --Btn-text-color: var(--color-secondary);
-    --Btn-outline-color: var(--color-secondary-outline);
-    --Btn-outline-color-focus: var(--color-secondary-focus);
+    --Btn-text-color: var(--color-secondary-2);
+    --Btn-focus-color: var(--color-secondary-0);
 }
 
 .Btn-link-tertiary {
-    --Btn-text-color: var(--color-tertiary);
-    --Btn-outline-color: var(--color-tertiary-outline);
-    --Btn-outline-color-focus: var(--color-tertiary-focus);
+    --Btn-text-color: var(--color-tertiary-2);
+    --Btn-focus-color: var(--color-tertiary-0);
 }
 
 .Btn-link-success {
-    --Btn-text-color: var(--color-success);
-    --Btn-outline-color: var(--color-success-outline);
-    --Btn-outline-color-focus: var(--color-success-focus);
+    --Btn-text-color: var(--color-success-2);
+    --Btn-focus-color: var(--color-success-0);
 }
 
 .Btn-link-warning {
-    --Btn-text-color: var(--color-warning);
-    --Btn-outline-color: var(--color-warning-outline);
-    --Btn-outline-color-focus: var(--color-warning-focus);
+    --Btn-text-color: var(--color-warning-3);
+    --Btn-focus-color: var(--color-warning-0);
 }
 
 .Btn-link-danger {
-    --Btn-text-color: var(--color-danger);
-    --Btn-outline-color: var(--color-danger-outline);
-    --Btn-outline-color-focus: var(--color-danger-focus);
+    --Btn-text-color: var(--color-danger-2);
+    --Btn-focus-color: var(--color-danger-0);
+}
+
+/* Outlined buttons - Material style */
+.Btn-outline {
+    --Btn-bg-color: transparent;
+    border: 1px solid currentColor;
+    box-shadow: none;
+}
+
+.Btn-outline.Btn-default {
+    border-color: var(--color-base-3);
+    --Btn-text-color: var(--color-text-0);
+}
+
+.Btn-outline.Btn-primary {
+    border-color: var(--color-primary-2);
+    --Btn-text-color: var(--color-primary-2);
+}
+
+.Btn-outline.Btn-secondary {
+    border-color: var(--color-secondary-2);
+    --Btn-text-color: var(--color-secondary-2);
+}
+
+.Btn-outline.Btn-tertiary {
+    border-color: var(--color-tertiary-2);
+    --Btn-text-color: var(--color-tertiary-2);
+}
+
+.Btn-outline.Btn-success {
+    border-color: var(--color-success-2);
+    --Btn-text-color: var(--color-success-2);
+}
+
+.Btn-outline.Btn-warning {
+    border-color: var(--color-warning-3);
+    --Btn-text-color: var(--color-warning-3);
+}
+
+.Btn-outline.Btn-danger {
+    border-color: var(--color-danger-2);
+    --Btn-text-color: var(--color-danger-2);
+}
+
+.Btn-outline:not(:disabled):hover {
+    background-color: currentColor;
+    opacity: 0.08;
+    box-shadow: none;
 }
 </style>

@@ -70,9 +70,57 @@ for (const [name, component] of Object.entries(manjuiComponents.components || {}
 - **Layout**: `VGroup`, `HGroup`, `HStack`, `Sizer`
 - **Typography**: `Title`, `Subtitle`, `Text`, `Link`
 - **Form**: `InputText`, `InputBase`
-- **UI Elements**: `Btn`, `Tab`, `TabCap`, `Icon`, `Image`, `Circle`, `Divider`
+- **UI Elements**: `Btn`, `Tab`, `TabCap`, `Icon`, `Image`, `Circle`, `Divider`, `ThemeToggle`
 
-### 4. Styling
+### 4. Theme Management
+
+Manjui includes a built-in theme manager that supports light, dark, and auto modes.
+
+#### Configuration
+
+You can customize the localStorage key used by the theme manager:
+
+```javascript
+// Using the theme plugin
+import { themePlugin } from 'manjui';
+
+app.use(themePlugin, {
+  themeStorageKey: 'my-app-theme' // Default: 'theme'
+});
+
+// Or using BaseApp
+import { BaseApp } from 'manjui';
+
+const app = new BaseApp(vueApp, mesh, {
+  themeStorageKey: 'my-app-theme'
+});
+```
+
+#### Usage
+
+```vue
+<template>
+  <!-- Use the ThemeToggle component -->
+  <ThemeToggle />
+
+  <!-- Or use the ThemeManager directly -->
+  <Btn @click="toggleTheme">Toggle Theme</Btn>
+</template>
+
+<script>
+export default {
+  inject: ['themeManager'],
+
+  methods: {
+    toggleTheme() {
+      this.themeManager.toggleTheme();
+    }
+  }
+}
+</script>
+```
+
+### 5. Styling
 
 Manjui uses CSS custom properties for theming. The main style files to import are:
 

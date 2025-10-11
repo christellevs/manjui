@@ -14,6 +14,7 @@ import Subtitle from './Subtitle.vue';
 import Tab from './Tab.vue';
 import TabCap from './TabCap.vue';
 import Text from './Text.vue';
+import ThemeToggle from './ThemeToggle.vue';
 import Title from './Title.vue';
 import VGroup from './VGroup.vue';
 
@@ -34,6 +35,7 @@ export {
     Tab,
     TabCap,
     Text,
+    ThemeToggle,
     Title,
     VGroup,
 };

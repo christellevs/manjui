@@ -3,9 +3,13 @@ import { Mesh } from 'mesh-ioc';
 import { App as VueApp } from 'vue';
 
 import * as components from './components/index.js';
-import { ThemeManager } from './utils/ThemeManager.js';
+import { ThemeManager } from './managers/ThemeManager.js';
 import { invokeInitHandlers } from './utils/init.js';
 import { globalProvideMap } from './utils/provide.js';
+
+export interface ManjuiConfig {
+    themeStorageKey?: string;
+}
 
 export class BaseApp {
 
@@ -14,6 +18,7 @@ export class BaseApp {
     constructor(
         readonly vue: VueApp,
         readonly mesh: Mesh = new Mesh(),
+        readonly config: ManjuiConfig = {},
     ) {
         // There's a weird issue with Vue proxies not properly
         // storing the reactive instances in Mesh if the mesh is also reactive
@@ -25,8 +30,10 @@ export class BaseApp {
         this.mesh.use((instance: any) => reactive(instance));
         this.mesh.constant('App', this);
         this.mesh.constant('Vue', this.vue);
+        this.mesh.constant('ManjuiConfig', this.config);
         vue.provide('app', this);
-        this.mesh.service(ThemeManager);
+        const themeManager = new ThemeManager(this.config);
+        this.mesh.constant('ThemeManager', themeManager);
         for (const [name, comp] of Object.entries(components)) {
             vue.component(name, comp);
         }

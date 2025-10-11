@@ -1,9 +1,20 @@
+import { init } from '../utils/init.js';
+import { provide } from '../utils/provide.js';
+import type { ManjuiConfig } from '../app.js';
+
 export type ThemeToken = 'light' | 'dark' | 'auto';
 
+@provide('themeManager')
 export class ThemeManager {
 
     currentTheme: ThemeToken = 'auto';
+    storageKey = 'theme';
 
+    constructor(config: ManjuiConfig = {}) {
+        this.storageKey = config.themeStorageKey ?? 'theme';
+    }
+
+    @init()
     init() {
         this.loadTheme();
         this.applyTheme();
@@ -35,9 +46,9 @@ export class ThemeManager {
 
     protected saveTheme() {
         if (this.currentTheme === 'auto') {
-            localStorage.removeItem('theme');
+            localStorage.removeItem(this.storageKey);
         } else {
-            localStorage.setItem('theme', this.currentTheme);
+            localStorage.setItem(this.storageKey, this.currentTheme);
         }
     }
 
@@ -51,7 +62,7 @@ export class ThemeManager {
     }
 
     protected getLocalStorageTheme(): ThemeToken {
-        const tok = localStorage.getItem('theme') ?? '';
+        const tok = localStorage.getItem(this.storageKey) ?? '';
         if (['dark', 'light'].includes(tok)) {
             return tok as ThemeToken;
         }

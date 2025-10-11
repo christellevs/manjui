@@ -10,7 +10,9 @@ import { themePlugin } from '../lib/index.js';
 import Root from './Root.vue';
 
 const app = createApp(Root);
-app.use(themePlugin);
+app.use(themePlugin, {
+    themeStorageKey: 'manjui-theme', // Customize localStorage key
+});
 
 for (const [name, component] of Object.entries(components)) {
     app.component(name, component);

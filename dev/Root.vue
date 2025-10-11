@@ -1,5 +1,8 @@
 <template>
     <div class="Root">
+        <div class="Header">
+            <ThemeToggle />
+        </div>
         <div class="Container">
             <Usage />
             <DesignSystem />
@@ -31,6 +34,13 @@ export default {
 </script>
 
 <style scoped>
+
+.Header {
+    position: fixed;
+    top: var(--sp2);
+    right: var(--sp2);
+    z-index: 1000;
+}
 
 .Container {
     max-width: var(--container-width);

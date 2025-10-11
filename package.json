@@ -1,6 +1,6 @@
 {
     "name": "manjui",
-    "version": "1.4.0",
+    "version": "1.4.1",
     "description": "Vue UI library & design system based on Nightshade UI (nightshade)",
     "type": "module",
     "exports": {

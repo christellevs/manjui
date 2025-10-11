@@ -8,6 +8,7 @@ import IconLink from './IconLink.vue';
 import Image from './Image.vue';
 import InputBase from './InputBase.vue';
 import InputText from './InputText.vue';
+import LanguageToggle from './LanguageToggle.vue';
 import Link from './Link.vue';
 import Sizer from './Sizer.vue';
 import Subtitle from './Subtitle.vue';
@@ -29,6 +30,7 @@ export {
     Image,
     InputBase,
     InputText,
+    LanguageToggle,
     Link,
     Sizer,
     Subtitle,

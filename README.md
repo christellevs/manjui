@@ -70,7 +70,8 @@ for (const [name, component] of Object.entries(manjuiComponents.components || {}
 - **Layout**: `VGroup`, `HGroup`, `HStack`, `Sizer`
 - **Typography**: `Title`, `Subtitle`, `Text`, `Link`
 - **Form**: `InputText`, `InputBase`
-- **UI Elements**: `Btn`, `Tab`, `TabCap`, `Icon`, `Image`, `Circle`, `Divider`, `ThemeToggle`
+- **UI Elements**: `Btn`, `Tab`, `TabCap`, `Icon`, `Image`, `Circle`, `Divider`
+- **Utilities**: `ThemeToggle`, `LanguageToggle`
 
 ### 4. Theme Management
 
@@ -120,7 +121,53 @@ export default {
 </script>
 ```
 
-### 5. Styling
+### 5. Language Toggle
+
+The LanguageToggle component provides a simple, elegant UI for language selection (e.g., "EN | PT"). It's presentation-only and doesn't handle translations itself:
+
+```vue
+<template>
+  <LanguageToggle
+    :languages="['en', 'pt']"
+    :current="currentLanguage"
+    @change="handleLanguageChange" />
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      currentLanguage: 'en'
+    };
+  },
+
+  methods: {
+    handleLanguageChange(lang) {
+      this.currentLanguage = lang;
+      // Handle language change in your app
+      // (update i18n, fetch translations, etc.)
+    }
+  }
+}
+</script>
+```
+
+**Props:**
+- `languages` (Array): List of language codes to display (default: `['en', 'pt']`)
+- `current` (String): Currently active language (default: `'en'`)
+
+**Events:**
+- `@change`: Emitted when a language is selected, passes the language code
+
+**Styling:**
+- Active language is highlighted in primary color with bold weight
+- Inactive languages are muted and become brighter on hover
+- Languages are separated by a pipe "|" character
+- Designed for 2 languages but supports more if needed
+
+**Note:** This component only provides the UI. You'll need to implement translation logic in your application (see your app's i18n setup or create a LanguageManager service).
+
+### 6. Styling
 
 Manjui uses CSS custom properties for theming. The main style files to import are:
 

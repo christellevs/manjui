@@ -1,7 +1,13 @@
 <template>
     <div class="Root">
         <div class="Header">
-            <ThemeToggle />
+            <HGroup gap="2">
+                <LanguageToggle
+                    :languages="['en', 'pt']"
+                    :current="currentLanguage"
+                    @change="handleLanguageChange" />
+                <ThemeToggle />
+            </HGroup>
         </div>
         <div class="Container">
             <Usage />
@@ -28,6 +34,21 @@ export default {
         GalleryInput,
         GalleryTab,
         Usage,
+    },
+
+    data() {
+        return {
+            currentLanguage: 'en',
+        };
+    },
+
+    methods: {
+
+        handleLanguageChange(lang) {
+            this.currentLanguage = lang;
+            console.log('Language changed to:', lang);
+        },
+
     }
 
 };

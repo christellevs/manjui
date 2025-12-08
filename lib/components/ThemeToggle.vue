@@ -31,13 +31,14 @@
             </span>
         </button>
     </div>
-    <Btn
+    <button
         v-else
-        :icon="themeIcon"
+        type="button"
+        class="ThemeBtn"
         :title="themeTitle"
-        kind="link-default"
-        square
-        @click="cycleTheme" />
+        @click="cycleTheme">
+        <i :class="themeIcon" />
+    </button>
 </template>
 
 <script>
@@ -169,20 +170,20 @@ export default {
 
 <style scoped>
 .ThemeToggle {
-    /* Component variables */
+    /* Component variables - Soft neo-brutalism */
     --Toggle-height: 36px;
-    --Toggle-padding: 2px;
+    --Toggle-padding: 3px;
     --Toggle-gap: 0;
     --Toggle-font-size: var(--font-size-small, 14px);
     --Toggle-border-width: 2px;
-    --Toggle-border-radius: var(--border-radius-pill, 9999px);
-    --Toggle-bg: var(--color-base-3);
+    --Toggle-border-radius: var(--border-radius, 8px);
+    --Toggle-bg: var(--color-base-2);
     --Toggle-border-color: var(--color-base-4);
-    --Toggle-shadow: var(--shadow-brutal-sm, 2px 2px 0 var(--color-base-4));
+    --Toggle-shadow: 2px 2px 0 var(--color-base-4);
     --Toggle-indicator-color: var(--color-primary-2);
-    --Toggle-indicator-shadow: 1px 1px 0 var(--color-primary-3);
+    --Toggle-indicator-border: var(--color-primary-3);
     --Toggle-text-active: var(--color-primary-text, #fff);
-    --Toggle-text-inactive: var(--color-text-0);
+    --Toggle-text-inactive: var(--color-text-2);
 
     position: relative;
     display: inline-flex;
@@ -200,16 +201,16 @@ export default {
         transform var(--duration-fast, 120ms) var(--ease-out, ease);
 }
 
-/* Neo-brutal hover lift */
+/* Soft neo-brutal hover lift */
 .ThemeToggle:hover {
     transform: translate(-1px, -1px);
-    box-shadow: var(--shadow-hover, 3px 3px 0 var(--color-base-4));
+    box-shadow: 3px 3px 0 var(--color-base-4);
 }
 
-/* Neo-brutal active press */
+/* Soft neo-brutal active press */
 .ThemeToggle:active {
     transform: translate(1px, 1px);
-    box-shadow: none;
+    box-shadow: 1px 1px 0 var(--color-base-4);
 }
 
 /* Sliding indicator */
@@ -219,8 +220,9 @@ export default {
     left: 0;
     height: calc(var(--Toggle-height) - var(--Toggle-padding) * 2 - var(--Toggle-border-width) * 2);
     background: var(--Toggle-indicator-color);
-    border-radius: calc(var(--Toggle-border-radius) - var(--Toggle-padding));
-    box-shadow: var(--Toggle-indicator-shadow);
+    border: 2px solid var(--Toggle-indicator-border);
+    border-radius: calc(var(--Toggle-border-radius) - var(--Toggle-padding) - 1px);
+    box-shadow: 1px 1px 0 var(--Toggle-indicator-border);
     transition:
         transform var(--duration-normal, 200ms) var(--ease-spring, cubic-bezier(0.34, 1.56, 0.64, 1)),
         width var(--duration-normal, 200ms) var(--ease-out, ease);
@@ -240,13 +242,12 @@ export default {
     padding: 0 var(--sp1-5, 12px);
     min-width: var(--sp5, 40px);
     border: none;
-    border-radius: calc(var(--Toggle-border-radius) - var(--Toggle-padding));
+    border-radius: calc(var(--Toggle-border-radius) - var(--Toggle-padding) - 1px);
     background: transparent;
     color: var(--Toggle-text-inactive);
     font-family: var(--font-main, inherit);
     font-size: var(--Toggle-font-size);
-    font-weight: var(--font-weight-bold, 700);
-    letter-spacing: 0.02em;
+    font-weight: var(--font-weight-medium, 500);
     cursor: pointer;
     transition:
         color var(--duration-fast, 120ms) var(--ease-out, ease);
@@ -258,10 +259,11 @@ export default {
 
 .Option-active {
     color: var(--Toggle-text-active);
+    font-weight: var(--font-weight-bold, 600);
 }
 
 .OptionIcon {
-    font-size: 1.1em;
+    font-size: 1em;
     line-height: 1;
 }
 
@@ -272,7 +274,7 @@ export default {
 /* Focus state */
 .Option:focus-visible {
     outline: none;
-    box-shadow: inset 0 0 0 2px var(--color-primary-focus, var(--color-primary-0));
+    box-shadow: inset 0 0 0 2px var(--color-primary-1);
 }
 
 /* ===========================================
@@ -304,27 +306,67 @@ export default {
    =========================================== */
 
 .ThemeToggle-default {
-    --Toggle-indicator-color: var(--color-text-0);
-    --Toggle-indicator-shadow: 1px 1px 0 var(--color-text-2);
-    --Toggle-text-active: var(--color-base-0);
+    --Toggle-indicator-color: var(--color-base-0);
+    --Toggle-indicator-border: var(--color-base-4);
+    --Toggle-text-active: var(--color-text-0);
 }
 
 .ThemeToggle-primary {
     --Toggle-indicator-color: var(--color-primary-2);
-    --Toggle-indicator-shadow: 1px 1px 0 var(--color-primary-3);
+    --Toggle-indicator-border: var(--color-primary-3);
     --Toggle-text-active: var(--color-primary-text);
 }
 
 .ThemeToggle-secondary {
     --Toggle-indicator-color: var(--color-secondary-2);
-    --Toggle-indicator-shadow: 1px 1px 0 var(--color-secondary-3);
+    --Toggle-indicator-border: var(--color-secondary-3);
     --Toggle-text-active: var(--color-secondary-text);
 }
 
 .ThemeToggle-tertiary {
     --Toggle-indicator-color: var(--color-tertiary-2);
-    --Toggle-indicator-shadow: 1px 1px 0 var(--color-tertiary-3);
+    --Toggle-indicator-border: var(--color-tertiary-3);
     --Toggle-text-active: var(--color-tertiary-text);
+}
+
+/* ===========================================
+   BUTTON VARIANT
+   =========================================== */
+
+.ThemeBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: 2px solid var(--color-base-4);
+    border-radius: var(--border-radius, 8px);
+    background: var(--color-base-2);
+    color: var(--color-text-1);
+    font-size: 1.1rem;
+    cursor: pointer;
+    box-shadow: 2px 2px 0 var(--color-base-4);
+    transition:
+        transform var(--duration-fast, 120ms) var(--ease-out, ease),
+        box-shadow var(--duration-fast, 120ms) var(--ease-out, ease),
+        color var(--duration-fast, 120ms) var(--ease-out, ease);
+}
+
+.ThemeBtn:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 var(--color-base-4);
+    color: var(--color-text-0);
+}
+
+.ThemeBtn:active {
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0 var(--color-base-4);
+}
+
+.ThemeBtn:focus-visible {
+    outline: none;
+    box-shadow: 3px 3px 0 var(--color-base-4), 0 0 0 2px var(--color-primary-1);
 }
 
 /* ===========================================
@@ -333,6 +375,7 @@ export default {
 
 @media (prefers-reduced-motion: reduce) {
     .ThemeToggle,
+    .ThemeBtn,
     .Indicator,
     .Option {
         transition: none;

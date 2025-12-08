@@ -205,30 +205,40 @@ export default {
     align-items: center;
     justify-content: center;
     padding: 0;
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     border: 0;
-    border-radius: var(--border-radius-small);
+    border-radius: 50%;
     background: transparent;
-    color: var(--color-text-2);
+    color: var(--color-text-3);
     cursor: pointer;
+    opacity: 0.6;
     transition:
         background-color var(--duration-fast, 120ms) var(--ease-out, ease),
-        color var(--duration-fast, 120ms) var(--ease-out, ease);
+        color var(--duration-fast, 120ms) var(--ease-out, ease),
+        opacity var(--duration-fast, 120ms) var(--ease-out, ease),
+        transform var(--duration-fast, 120ms) var(--ease-out, ease);
+}
+
+.InputStringList-tag-remove svg {
+    width: 10px;
+    height: 10px;
 }
 
 .InputStringList-tag-remove:hover {
-    background: var(--color-danger-1);
-    color: var(--color-danger-3);
+    background: var(--color-text-3);
+    color: var(--color-base-0);
+    opacity: 1;
+    transform: scale(1.1);
 }
 
 .InputStringList-tag-remove:active {
-    background: var(--color-danger-2);
+    transform: scale(0.95);
 }
 
 .InputStringList-tag-remove:disabled {
     cursor: not-allowed;
-    opacity: 0.5;
+    opacity: 0.3;
 }
 
 .InputStringList-input {

@@ -3,7 +3,11 @@ import { Mesh } from 'mesh-ioc';
 import { App as VueApp } from 'vue';
 
 import * as components from './components/index.js';
+import { vFocus } from './directives/focus.js';
+import { DateManager } from './managers/DateManager.js';
+import { NotificationsManager } from './managers/NotificationsManager.js';
 import { ThemeManager } from './managers/ThemeManager.js';
+import { UiManager } from './managers/UiManager.js';
 import { invokeInitHandlers } from './utils/init.js';
 import { globalProvideMap } from './utils/provide.js';
 
@@ -32,8 +36,14 @@ export class BaseApp {
         this.mesh.constant('Vue', this.vue);
         this.mesh.constant('ManjuiConfig', this.config);
         vue.provide('app', this);
-        const themeManager = new ThemeManager(this.config);
-        this.mesh.constant('ThemeManager', themeManager);
+        // Register core managers
+        this.mesh.service(ThemeManager);
+        this.mesh.service(UiManager);
+        this.mesh.service(DateManager);
+        this.mesh.service(NotificationsManager);
+        // Register directives
+        vue.directive('focus', vFocus);
+        // Register components globally
         for (const [name, comp] of Object.entries(components)) {
             vue.component(name, comp);
         }
@@ -59,4 +69,3 @@ export class BaseApp {
     }
 
 }
-

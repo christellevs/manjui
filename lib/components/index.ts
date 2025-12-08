@@ -5,9 +5,10 @@ import Callout from './Callout.vue';
 import Checkbox from './Checkbox.vue';
 import Circle from './Circle.vue';
 import Container from './Container.vue';
-import DataTable from './DataTable.vue';
 import ContextHelp from './ContextHelp.vue';
 import ContextMenu from './ContextMenu.vue';
+import ContextPopup from './ContextPopup.vue';
+import DataTable from './DataTable.vue';
 import Divider from './Divider.vue';
 import DragHelper from './DragHelper.vue';
 import EmptyMessage from './EmptyMessage.vue';
@@ -26,6 +27,7 @@ import InputText from './InputText.vue';
 import LanguageToggle from './LanguageToggle.vue';
 import Link from './Link.vue';
 import ListItem from './ListItem.vue';
+import LoadingAnimation from './LoadingAnimation.vue';
 import LoadingScreen from './LoadingScreen.vue';
 import Notification from './Notification.vue';
 import Notifications from './Notifications.vue';
@@ -39,6 +41,8 @@ import Sizer from './Sizer.vue';
 import Spinner from './Spinner.vue';
 import StateBtn from './StateBtn.vue';
 import Subtitle from './Subtitle.vue';
+import Switch from './Switch.vue';
+import SwitchField from './SwitchField.vue';
 import Tab from './Tab.vue';
 import TabCap from './TabCap.vue';
 import TabItem from './TabItem.vue';
@@ -62,6 +66,7 @@ export {
     Container,
     ContextHelp,
     ContextMenu,
+    ContextPopup,
     DataTable,
     Divider,
     DragHelper,
@@ -81,6 +86,7 @@ export {
     LanguageToggle,
     Link,
     ListItem,
+    LoadingAnimation,
     LoadingScreen,
     Notification,
     Notifications,
@@ -94,6 +100,8 @@ export {
     Spinner,
     StateBtn,
     Subtitle,
+    Switch,
+    SwitchField,
     Tab,
     TabCap,
     TabItem,

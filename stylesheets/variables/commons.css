@@ -1,42 +1,58 @@
+/* ===========================================
+   COMMON DESIGN TOKENS
+   Layout, links, inputs, images, etc.
+   =========================================== */
+
 :root {
+    /* Layout */
     --container-width: 640px;
     --container-width-mobile: 420px;
     --content-width: 640px;
-    
-    --background-color: var(--color-base-0);
+
+    /* Background & text */
+    --background-color: var(--surface-ground);
     --text-color: var(--color-text-0);
 
+    /* Links */
     --link-color: var(--color-primary-2);
     --link-color-hover: var(--color-primary-1);
 
+    /* Code */
     --code-color: var(--color-secondary);
 
+    /* Text color variants */
     --color-subtle: var(--color-text-1);
     --color-sublime: var(--color-text-2);
 
-    --border-radius: var(--sp);
-    --border-radius-round: var(--sp2);
-
+    /* Input sizes */
     --input-size: var(--sp4);
     --input-size-small: var(--sp3);
     --input-size-smaller: var(--sp2);
     --input-size-large: var(--sp5);
     --input-size-larger: var(--sp6);
-    
+
+    /* Image sizes */
     --image-size: var(--sp24);
     --image-size-icon: var(--sp4);
-
     --image-size-smallest: var(--sp8);
     --image-size-smaller: var(--sp12);
     --image-size-small: var(--sp16);
-    
     --image-size-large: var(--sp24);
     --image-size-larger: var(--sp36);
     --image-size-largest: var(--sp48);
 
+    /* Image hover effect */
     --image-hover-scale: 1.03;
+
+    /* Blur scale for glassmorphism */
+    --blur-xs: 2px;
+    --blur-sm: 4px;
+    --blur-md: 8px;
+    --blur-lg: 16px;
+    --blur-xl: 24px;
+    --blur-2xl: 40px;
 }
 
 .theme-dark {
-
+    --background-color: var(--surface-ground);
 }

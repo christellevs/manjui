@@ -59,7 +59,7 @@ export default {
         title: { type: String },
         icon: { type: String, required: false },
         iconPos: { type: String, default: 'left' },
-        kind: { type: String, default: 'link-default' },
+        kind: { type: String, default: 'default' },
         hoverKind: { type: String },
         customTag: { type: String },
         href: { type: String },
@@ -137,35 +137,24 @@ export default {
 
 <style scoped>
 .Btn {
+    /* Component-level variables */
     --Btn-padding: var(--sp2);
     --Btn-gap: var(--sp);
     --Btn-size: var(--input-size);
     --Btn-font-size: var(--font-size);
-
     --Btn-text-color: inherit;
     --Btn-bg-color: transparent;
     --Btn-border-radius: var(--border-radius);
-    
-    /* Material elevation shadows */
-    --elevation-0: none;
-    --elevation-1: 0 2px 1px -1px hsla(0, 0%, 0%, 0.2), 
-                   0 1px 1px 0 hsla(0, 0%, 0%, 0.14), 
-                   0 1px 3px 0 hsla(0, 0%, 0%, 0.12);
-    --elevation-2: 0 3px 1px -2px hsla(0, 0%, 0%, 0.2), 
-                   0 2px 2px 0 hsla(0, 0%, 0%, 0.14), 
-                   0 1px 5px 0 hsla(0, 0%, 0%, 0.12);
-    --elevation-3: 0 3px 3px -2px hsla(0, 0%, 0%, 0.2), 
-                   0 3px 4px 0 hsla(0, 0%, 0%, 0.14), 
-                   0 1px 8px 0 hsla(0, 0%, 0%, 0.12);
-    --elevation-4: 0 2px 4px -1px hsla(0, 0%, 0%, 0.2), 
-                   0 4px 5px 0 hsla(0, 0%, 0%, 0.14), 
-                   0 1px 10px 0 hsla(0, 0%, 0%, 0.12);
-    --elevation-6: 0 3px 5px -1px hsla(0, 0%, 0%, 0.2), 
-                   0 6px 10px 0 hsla(0, 0%, 0%, 0.14), 
-                   0 1px 18px 0 hsla(0, 0%, 0%, 0.12);
-    --elevation-8: 0 5px 5px -3px hsla(0, 0%, 0%, 0.2), 
-                   0 8px 10px 1px hsla(0, 0%, 0%, 0.14), 
-                   0 3px 14px 2px hsla(0, 0%, 0%, 0.12);
+    --Btn-bg-hover-color: color-mix(in srgb, var(--Btn-bg-color) 92%, white);
+
+    /* Use global transition and state layer variables */
+    --Btn-ease: var(--ease-standard, cubic-bezier(0.2, 0, 0, 1));
+    --Btn-duration-short: var(--duration-fast, 120ms);
+    --Btn-duration: var(--duration-normal, 200ms);
+    --Btn-duration-long: var(--duration-slow, 320ms);
+    --state-layer-hover-opacity: var(--state-layer-hover, 0.08);
+    --state-layer-focus-opacity: var(--state-layer-focus, 0.12);
+    --state-layer-pressed-opacity: var(--state-layer-pressed, 0.12);
 
     -webkit-appearance: none;
     appearance: none;
@@ -194,17 +183,32 @@ export default {
     font-family: var(--font-main);
     font-size: var(--Btn-font-size);
     font-weight: var(--font-weight-bold);
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
+    letter-spacing: 0.01em;
 
     color: var(--Btn-text-color);
     background-color: var(--Btn-bg-color);
-    box-shadow: var(--elevation-2);
+    box-shadow: var(--elevation-1);
 
     transition: 
-        background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
-        box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1),
-        transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+        background-color var(--Btn-duration) var(--Btn-ease),
+        box-shadow var(--Btn-duration) var(--Btn-ease),
+        color var(--Btn-duration) var(--Btn-ease),
+        border-color var(--Btn-duration) var(--Btn-ease),
+        transform var(--Btn-duration) var(--Btn-ease);
+    will-change: box-shadow, transform;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* State layer overlay (Material 3) */
+.Btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background-color: currentColor;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
 }
 
 /* Ripple container */
@@ -223,9 +227,9 @@ export default {
 .Btn-ripple {
     position: absolute;
     border-radius: 50%;
-    background: radial-gradient(circle, hsla(0, 0%, 100%, 0.3) 0%, transparent 70%);
+    background: radial-gradient(circle, hsla(0, 0%, 100%, 0.2) 0%, transparent 70%);
     transform: scale(0);
-    animation: ripple-animation 0.6s ease-out;
+    animation: ripple-animation 0.7s var(--Btn-ease);
     pointer-events: none;
 }
 
@@ -238,7 +242,14 @@ export default {
 
 /* Hover state */
 .Btn:not(:disabled):hover, .Btn.Btn-pseudo-hover {
-    box-shadow: var(--elevation-4);
+    box-shadow: var(--elevation-3);
+    transform: translateY(-1px);
+    /* apply per-kind hover color */
+    --Btn-bg-color: var(--Btn-bg-hover-color);
+}
+.Btn:not(:disabled):hover::before,
+.Btn.Btn-pseudo-hover::before {
+    opacity: var(--state-layer-hover-opacity);
 }
 
 /* Focus state - Material style focus */
@@ -255,10 +266,37 @@ export default {
     border: 2px solid var(--Btn-focus-color, var(--color-primary-focus));
     pointer-events: none;
 }
+.Btn:not(:disabled):focus-visible::before,
+.Btn.Btn-pseudo-focus::before {
+    opacity: var(--state-layer-focus-opacity);
+}
 
 /* Active state */
 .Btn:not(:disabled):active, .Btn.Btn-pseudo-active {
-    box-shadow: var(--elevation-8);
+    box-shadow: var(--elevation-1);
+    transform: translateY(0);
+}
+.Btn:not(:disabled):active::before,
+.Btn.Btn-pseudo-active::before {
+    opacity: var(--state-layer-pressed-opacity);
+}
+
+.Btn:disabled::before,
+.Btn.Btn-disabled::before {
+    opacity: 0 !important;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .Btn {
+        transition: none;
+    }
+    .Btn::before {
+        transition: none;
+    }
+    .Btn-ripple {
+        animation: none;
+    }
 }
 
 .Label {
@@ -329,95 +367,75 @@ export default {
     --Btn-text-color: var(--color-text-0);
     --Btn-bg-color: var(--color-base-1);
     --Btn-focus-color: var(--color-text-2);
-}
-
-.Btn-default:not(:disabled):hover {
-    --Btn-bg-color: var(--color-base-2);
+    --Btn-bg-hover-color: var(--color-base-2);
 }
 
 .Btn-primary {
     --Btn-text-color: var(--color-primary-text);
     --Btn-bg-color: var(--color-primary-2);
     --Btn-focus-color: var(--color-primary-0);
+    --Btn-bg-hover-color: color-mix(in srgb, var(--color-primary-2) 92%, white);
 }
 
 .Btn-primary .Btn-ripple {
     background: radial-gradient(circle, hsla(310deg, 64%, 90%, 0.4) 0%, transparent 70%);
 }
 
-.Btn-primary:not(:disabled):hover {
-    --Btn-bg-color: var(--color-primary-3);
-}
-
 .Btn-secondary {
     --Btn-text-color: var(--color-secondary-text);
     --Btn-bg-color: var(--color-secondary-2);
     --Btn-focus-color: var(--color-secondary-0);
+    --Btn-bg-hover-color: color-mix(in srgb, var(--color-secondary-2) 92%, white);
 }
 
 .Btn-secondary .Btn-ripple {
     background: radial-gradient(circle, hsla(290deg, 50%, 90%, 0.4) 0%, transparent 70%);
 }
 
-.Btn-secondary:not(:disabled):hover {
-    --Btn-bg-color: var(--color-secondary-3);
-}
-
 .Btn-tertiary {
     --Btn-text-color: var(--color-tertiary-text);
     --Btn-bg-color: var(--color-tertiary-2);
     --Btn-focus-color: var(--color-tertiary-0);
+    --Btn-bg-hover-color: color-mix(in srgb, var(--color-tertiary-2) 92%, white);
 }
 
 .Btn-tertiary .Btn-ripple {
     background: radial-gradient(circle, hsla(176deg, 50%, 90%, 0.4) 0%, transparent 70%);
 }
 
-.Btn-tertiary:not(:disabled):hover {
-    --Btn-bg-color: var(--color-tertiary-3);
-}
-
 .Btn-success {
     --Btn-text-color: var(--color-success-text);
     --Btn-bg-color: var(--color-success-2);
     --Btn-focus-color: var(--color-success-0);
+    --Btn-bg-hover-color: color-mix(in srgb, var(--color-success-2) 92%, white);
 }
 
 .Btn-success .Btn-ripple {
     background: radial-gradient(circle, hsla(96deg, 60%, 90%, 0.4) 0%, transparent 70%);
 }
 
-.Btn-success:not(:disabled):hover {
-    --Btn-bg-color: var(--color-success-3);
-}
-
 .Btn-warning {
     --Btn-text-color: var(--color-warning-text);
     --Btn-bg-color: var(--color-warning-3);
     --Btn-focus-color: var(--color-warning-0);
+    --Btn-bg-hover-color: color-mix(in srgb, var(--color-warning-3) 92%, black);
 }
 
 .Btn-warning .Btn-ripple {
     background: radial-gradient(circle, hsla(48deg, 88%, 20%, 0.2) 0%, transparent 70%);
 }
 
-.Btn-warning:not(:disabled):hover {
-    --Btn-bg-color: var(--color-warning-2);
-}
-
 .Btn-danger {
     --Btn-text-color: var(--color-danger-text);
     --Btn-bg-color: var(--color-danger-2);
     --Btn-focus-color: var(--color-danger-0);
+    --Btn-bg-hover-color: color-mix(in srgb, var(--color-danger-2) 92%, white);
 }
 
 .Btn-danger .Btn-ripple {
     background: radial-gradient(circle, hsla(350deg, 88%, 90%, 0.4) 0%, transparent 70%);
 }
 
-.Btn-danger:not(:disabled):hover {
-    --Btn-bg-color: var(--color-danger-3);
-}
 
 /* Text/Link buttons - Material text button style */
 .Btn-link-default,
@@ -438,9 +456,8 @@ export default {
 .Btn-link-success:not(:disabled):hover,
 .Btn-link-warning:not(:disabled):hover,
 .Btn-link-danger:not(:disabled):hover {
-    background-color: currentColor;
-    opacity: 0.08;
     box-shadow: none;
+    color: color-mix(in srgb, currentColor 88%, white);
 }
 
 .Btn-link-default {
@@ -521,8 +538,8 @@ export default {
 }
 
 .Btn-outline:not(:disabled):hover {
-    background-color: currentColor;
-    opacity: 0.08;
     box-shadow: none;
+    color: color-mix(in srgb, currentColor 88%, white);
+    border-color: color-mix(in srgb, currentColor 88%, white);
 }
 </style>

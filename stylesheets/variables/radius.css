@@ -1,0 +1,26 @@
+/* ===========================================
+   BORDER RADIUS SCALE
+   Expanded scale for modern UI design
+   =========================================== */
+
+:root {
+    /* Base radius unit */
+    --radius-unit: 4px;
+
+    /* Radius scale */
+    --radius-none: 0;
+    --radius-xs: 2px;
+    --radius-sm: var(--radius-unit);                    /* 4px */
+    --radius-md: calc(var(--radius-unit) * 2);          /* 8px */
+    --radius-lg: calc(var(--radius-unit) * 3);          /* 12px */
+    --radius-xl: calc(var(--radius-unit) * 4);          /* 16px */
+    --radius-2xl: calc(var(--radius-unit) * 6);         /* 24px */
+    --radius-3xl: calc(var(--radius-unit) * 8);         /* 32px */
+    --radius-full: 9999px;
+
+    /* Semantic radius aliases */
+    --border-radius: var(--radius-md);                  /* 8px - default */
+    --border-radius-small: var(--radius-sm);            /* 4px */
+    --border-radius-round: var(--radius-xl);            /* 16px */
+    --border-radius-pill: var(--radius-full);           /* pill shape */
+}

@@ -13,6 +13,7 @@
             <Usage />
             <DesignSystem />
             <GalleryBtn />
+            <GalleryCheckbox />
             <GalleryInput />
             <GalleryTab />
         </div>
@@ -22,6 +23,7 @@
 <script>
 import DesignSystem from './DesignSystem.vue';
 import GalleryBtn from './GalleryBtn.vue';
+import GalleryCheckbox from './GalleryCheckbox.vue';
 import GalleryInput from './GalleryInput.vue';
 import GalleryTab from './GalleryTab.vue';
 import Usage from './Usage.vue';
@@ -31,6 +33,7 @@ export default {
     components: {
         DesignSystem,
         GalleryBtn,
+        GalleryCheckbox,
         GalleryInput,
         GalleryTab,
         Usage,

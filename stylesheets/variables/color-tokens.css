@@ -1,5 +1,9 @@
 :root {
 
+    /* ===========================================
+       BASE & TEXT COLORS
+       =========================================== */
+
     --color-base-0: hsl(280deg, 10%, 100%);
     --color-base-1: hsl(280deg, 10%, 96%);
     --color-base-2: hsl(280deg, 10%, 92%);
@@ -11,6 +15,51 @@
     --color-text-2: hsl(280deg, 10%, 64%);
     --color-text-3: hsl(280deg, 10%, 72%);
     --color-text-4: hsl(280deg, 10%, 78%);
+
+    /* ===========================================
+       ALPHA VARIANTS (for overlays & glass effects)
+       =========================================== */
+
+    --color-black-a5: hsla(0, 0%, 0%, 0.05);
+    --color-black-a10: hsla(0, 0%, 0%, 0.1);
+    --color-black-a20: hsla(0, 0%, 0%, 0.2);
+    --color-black-a40: hsla(0, 0%, 0%, 0.4);
+    --color-black-a60: hsla(0, 0%, 0%, 0.6);
+    --color-black-a80: hsla(0, 0%, 0%, 0.8);
+
+    --color-white-a5: hsla(0, 0%, 100%, 0.05);
+    --color-white-a10: hsla(0, 0%, 100%, 0.1);
+    --color-white-a20: hsla(0, 0%, 100%, 0.2);
+    --color-white-a40: hsla(0, 0%, 100%, 0.4);
+    --color-white-a60: hsla(0, 0%, 100%, 0.6);
+    --color-white-a80: hsla(0, 0%, 100%, 0.8);
+
+    --color-primary-a10: hsla(310, 64%, 50%, 0.1);
+    --color-primary-a20: hsla(310, 64%, 50%, 0.2);
+    --color-primary-a40: hsla(310, 64%, 50%, 0.4);
+
+    --color-secondary-a10: hsla(290, 50%, 60%, 0.1);
+    --color-secondary-a20: hsla(290, 50%, 60%, 0.2);
+    --color-secondary-a40: hsla(290, 50%, 60%, 0.4);
+
+    --color-tertiary-a10: hsla(176, 50%, 50%, 0.1);
+    --color-tertiary-a20: hsla(176, 50%, 50%, 0.2);
+    --color-tertiary-a40: hsla(176, 50%, 50%, 0.4);
+
+    /* ===========================================
+       SURFACE HIERARCHY (for layered interfaces)
+       =========================================== */
+
+    --surface-ground: var(--color-base-0);
+    --surface-card: var(--color-base-0);
+    --surface-elevated: var(--color-base-1);
+    --surface-overlay: var(--color-base-0);
+    --surface-hover: var(--color-base-2);
+    --surface-border: var(--color-base-3);
+
+    /* ===========================================
+       DEFAULT COLOR TOKENS
+       =========================================== */
 
     --color-default: var(--color-text-0);
     --color-default-0: var(--color-base-0);
@@ -107,22 +156,89 @@
 
 .theme-dark {
 
-    --color-base-0: hsl(280deg, 5%, 16%);
-    --color-base-1: hsl(280deg, 5%, 20%);
-    --color-base-2: hsl(280deg, 5%, 24%);
-    --color-base-3: hsl(280deg, 5%, 27%);
-    --color-base-4: hsl(280deg, 5%, 32%);
+    /* ===========================================
+       DARK THEME BASE & TEXT COLORS
+       =========================================== */
 
-    --color-text-0: hsl(280deg, 10%, 92%);
-    --color-text-1: hsl(280deg, 10%, 72%);
-    --color-text-2: hsl(280deg, 10%, 50%);
-    --color-text-3: hsl(280deg, 10%, 44%);
-    --color-text-4: hsl(280deg, 10%, 40%);
+    --color-base-0: hsl(280deg, 5%, 12%);
+    --color-base-1: hsl(280deg, 5%, 16%);
+    --color-base-2: hsl(280deg, 5%, 20%);
+    --color-base-3: hsl(280deg, 5%, 24%);
+    --color-base-4: hsl(280deg, 5%, 30%);
+
+    --color-text-0: hsl(280deg, 8%, 94%);
+    --color-text-1: hsl(280deg, 6%, 72%);
+    --color-text-2: hsl(280deg, 4%, 54%);
+    --color-text-3: hsl(280deg, 4%, 44%);
+    --color-text-4: hsl(280deg, 4%, 38%);
+
+    /* ===========================================
+       DARK THEME ALPHA VARIANTS
+       =========================================== */
+
+    --color-black-a5: hsla(0, 0%, 0%, 0.15);
+    --color-black-a10: hsla(0, 0%, 0%, 0.25);
+    --color-black-a20: hsla(0, 0%, 0%, 0.35);
+    --color-black-a40: hsla(0, 0%, 0%, 0.5);
+
+    --color-white-a5: hsla(0, 0%, 100%, 0.03);
+    --color-white-a10: hsla(0, 0%, 100%, 0.06);
+    --color-white-a20: hsla(0, 0%, 100%, 0.12);
+    --color-white-a40: hsla(0, 0%, 100%, 0.24);
+
+    /* ===========================================
+       DARK THEME SURFACE HIERARCHY
+       =========================================== */
+
+    --surface-ground: var(--color-base-0);
+    --surface-card: var(--color-base-1);
+    --surface-elevated: var(--color-base-2);
+    --surface-overlay: var(--color-base-2);
+    --surface-hover: var(--color-base-3);
+    --surface-border: var(--color-base-4);
+
+    /* ===========================================
+       DARK THEME DEFAULT TOKENS (inverted)
+       =========================================== */
 
     --color-default-0: var(--color-base-4);
     --color-default-1: var(--color-base-3);
     --color-default-2: var(--color-base-2);
     --color-default-3: var(--color-base-1);
     --color-default-4: var(--color-base-0);
+
+    /* ===========================================
+       DARK THEME SEMANTIC COLORS (lighter for visibility)
+       =========================================== */
+
+    --color-primary-0: hsl(310deg, 56%, 80%);
+    --color-primary-1: hsl(310deg, 56%, 70%);
+    --color-primary-2: hsl(310deg, 56%, 60%);
+    --color-primary-3: hsl(310deg, 56%, 50%);
+
+    --color-secondary-0: hsl(290deg, 42%, 82%);
+    --color-secondary-1: hsl(290deg, 42%, 72%);
+    --color-secondary-2: hsl(290deg, 42%, 65%);
+    --color-secondary-3: hsl(290deg, 42%, 55%);
+
+    --color-tertiary-0: hsl(176deg, 42%, 80%);
+    --color-tertiary-1: hsl(176deg, 42%, 72%);
+    --color-tertiary-2: hsl(176deg, 42%, 58%);
+    --color-tertiary-3: hsl(176deg, 42%, 48%);
+
+    --color-success-0: hsl(96deg, 50%, 82%);
+    --color-success-1: hsl(96deg, 50%, 72%);
+    --color-success-2: hsl(96deg, 50%, 60%);
+    --color-success-3: hsl(96deg, 50%, 50%);
+
+    --color-warning-0: hsl(48deg, 78%, 85%);
+    --color-warning-1: hsl(48deg, 78%, 78%);
+    --color-warning-2: hsl(48deg, 78%, 62%);
+    --color-warning-3: hsl(48deg, 78%, 52%);
+
+    --color-danger-0: hsl(350deg, 78%, 88%);
+    --color-danger-1: hsl(350deg, 78%, 72%);
+    --color-danger-2: hsl(350deg, 78%, 64%);
+    --color-danger-3: hsl(350deg, 78%, 56%);
 
 }

@@ -7,12 +7,12 @@
             `Image-align--${align}`,
             {
                 'Image--hover': hover,
-                'Image--flip': flip
+                'Image--flip': flip,
+                'Image--hoverPop': hoverPop
             }
         ]"
         :src="src"
-        :alt="alt"
-        :hoverPop="hoverPop" />
+        :alt="alt" />
 
 </template>
 
@@ -33,14 +33,18 @@ export default {
         },
         hover: { type: Boolean, default: false },
         flip: { type: Boolean, default: false },
-        hoverPop: { type: Boolean, required: false, default: false }
+        hoverPop: { type: Boolean, default: false }
     },
 };
 </script>
 
 <style scoped>
-.Image-size-medium { width: var(--image-size); }
+.Image {
+    transition: transform var(--duration-normal, 200ms) var(--ease-standard, ease);
+}
 
+/* Size variants */
+.Image-size-medium { width: var(--image-size); }
 .Image-size-icon { width: var(--image-size-icon); }
 .Image-size-smallest { width: var(--image-size-smallest); }
 .Image-size-smaller { width: var(--image-size-smaller); }
@@ -48,30 +52,43 @@ export default {
 .Image-size-large { width: var(--image-size-large); }
 .Image-size-larger { width: var(--image-size-larger); }
 .Image-size-largest { width: var(--image-size-largest); }
+
+/* Alignment */
 .Image-align--start {
     margin-right: auto;
     margin-left: 0;
     display: block;
 }
+
 .Image-align--center {
     margin-left: auto;
     margin-right: auto;
     display: block;
 }
+
 .Image-align--end {
     margin-left: auto;
     margin-right: 0;
     display: block;
 }
-.Image-hoverPop:hover {
-    transform: scale(var(--image-hover-scale));
+
+/* Hover effects */
+.Image--hover:hover {
+    transform: scale(var(--image-hover-scale, 1.03));
 }
 
-.Image {
-    transition: transform 0.2s ease-in-out;
+.Image--hoverPop:hover {
+    transform: scale(var(--image-hover-scale, 1.03));
+    box-shadow: var(--shadow-soft-lg, 0 8px 32px -8px hsla(280, 10%, 20%, 0.2));
 }
 
+/* Flip transform */
 .Image--flip {
     transform: scaleX(-1);
+}
+
+.Image--flip.Image--hover:hover,
+.Image--flip.Image--hoverPop:hover {
+    transform: scaleX(-1) scale(var(--image-hover-scale, 1.03));
 }
 </style>

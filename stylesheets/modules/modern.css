@@ -1,0 +1,304 @@
+/* ===========================================
+   MODERN CSS UTILITIES
+   Glassmorphism, gradients, and modern effects
+   =========================================== */
+
+/* ===========================================
+   GLASSMORPHISM
+   Frosted glass effects with backdrop-filter
+   =========================================== */
+
+.glass {
+    background: var(--color-white-a60);
+    backdrop-filter: blur(var(--blur-md));
+    -webkit-backdrop-filter: blur(var(--blur-md));
+    border: 1px solid var(--color-white-a20);
+}
+
+.glass-sm {
+    background: var(--color-white-a40);
+    backdrop-filter: blur(var(--blur-sm));
+    -webkit-backdrop-filter: blur(var(--blur-sm));
+    border: 1px solid var(--color-white-a10);
+}
+
+.glass-lg {
+    background: var(--color-white-a80);
+    backdrop-filter: blur(var(--blur-lg));
+    -webkit-backdrop-filter: blur(var(--blur-lg));
+    border: 1px solid var(--color-white-a20);
+}
+
+.glass-dark {
+    background: var(--color-black-a40);
+    backdrop-filter: blur(var(--blur-md));
+    -webkit-backdrop-filter: blur(var(--blur-md));
+    border: 1px solid var(--color-white-a10);
+    color: var(--color-base-0);
+}
+
+.glass-primary {
+    background: var(--color-primary-a20);
+    backdrop-filter: blur(var(--blur-md));
+    -webkit-backdrop-filter: blur(var(--blur-md));
+    border: 1px solid var(--color-primary-a10);
+}
+
+.glass-secondary {
+    background: var(--color-secondary-a20);
+    backdrop-filter: blur(var(--blur-md));
+    -webkit-backdrop-filter: blur(var(--blur-md));
+    border: 1px solid var(--color-secondary-a10);
+}
+
+.glass-tertiary {
+    background: var(--color-tertiary-a20);
+    backdrop-filter: blur(var(--blur-md));
+    -webkit-backdrop-filter: blur(var(--blur-md));
+    border: 1px solid var(--color-tertiary-a10);
+}
+
+/* Dark theme glass adjustments */
+.theme-dark .glass {
+    background: var(--color-white-a10);
+    border-color: var(--color-white-a5);
+}
+
+.theme-dark .glass-sm {
+    background: var(--color-white-a5);
+    border-color: var(--color-white-a5);
+}
+
+.theme-dark .glass-lg {
+    background: var(--color-white-a20);
+    border-color: var(--color-white-a10);
+}
+
+/* ===========================================
+   GRADIENTS
+   Predefined gradient backgrounds
+   =========================================== */
+
+:root {
+    /* Linear gradients */
+    --gradient-primary: linear-gradient(135deg, var(--color-primary-1) 0%, var(--color-primary-3) 100%);
+    --gradient-secondary: linear-gradient(135deg, var(--color-secondary-1) 0%, var(--color-secondary-3) 100%);
+    --gradient-tertiary: linear-gradient(135deg, var(--color-tertiary-1) 0%, var(--color-tertiary-3) 100%);
+    --gradient-success: linear-gradient(135deg, var(--color-success-1) 0%, var(--color-success-3) 100%);
+    --gradient-warning: linear-gradient(135deg, var(--color-warning-1) 0%, var(--color-warning-3) 100%);
+    --gradient-danger: linear-gradient(135deg, var(--color-danger-1) 0%, var(--color-danger-3) 100%);
+
+    /* Mixed gradients */
+    --gradient-primary-secondary: linear-gradient(135deg, var(--color-primary-2) 0%, var(--color-secondary-2) 100%);
+    --gradient-secondary-tertiary: linear-gradient(135deg, var(--color-secondary-2) 0%, var(--color-tertiary-2) 100%);
+    --gradient-tertiary-primary: linear-gradient(135deg, var(--color-tertiary-2) 0%, var(--color-primary-2) 100%);
+
+    /* Surface gradients (subtle) */
+    --gradient-surface: linear-gradient(180deg, var(--surface-card) 0%, var(--surface-elevated) 100%);
+    --gradient-surface-radial: radial-gradient(ellipse at top, var(--surface-elevated) 0%, var(--surface-ground) 100%);
+
+    /* Mesh/Aurora gradients */
+    --gradient-aurora: linear-gradient(
+        135deg,
+        hsla(310, 64%, 50%, 0.3) 0%,
+        hsla(290, 50%, 60%, 0.2) 25%,
+        hsla(176, 50%, 50%, 0.3) 50%,
+        hsla(96, 60%, 56%, 0.2) 75%,
+        hsla(310, 64%, 50%, 0.3) 100%
+    );
+}
+
+/* Gradient background utilities */
+.bg-gradient-primary { background: var(--gradient-primary); }
+.bg-gradient-secondary { background: var(--gradient-secondary); }
+.bg-gradient-tertiary { background: var(--gradient-tertiary); }
+.bg-gradient-success { background: var(--gradient-success); }
+.bg-gradient-warning { background: var(--gradient-warning); }
+.bg-gradient-danger { background: var(--gradient-danger); }
+.bg-gradient-primary-secondary { background: var(--gradient-primary-secondary); }
+.bg-gradient-secondary-tertiary { background: var(--gradient-secondary-tertiary); }
+.bg-gradient-tertiary-primary { background: var(--gradient-tertiary-primary); }
+.bg-gradient-surface { background: var(--gradient-surface); }
+.bg-gradient-aurora { background: var(--gradient-aurora); }
+
+/* Gradient text utilities */
+.text-gradient-primary {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-secondary {
+    background: var(--gradient-secondary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-tertiary {
+    background: var(--gradient-tertiary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-primary-secondary {
+    background: var(--gradient-primary-secondary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* ===========================================
+   SOFT UI / NEUMORPHISM (optional)
+   Subtle raised/pressed effects
+   =========================================== */
+
+.soft-raised {
+    background: var(--surface-card);
+    box-shadow:
+        6px 6px 12px var(--color-black-a10),
+        -6px -6px 12px var(--color-white-a80);
+    border-radius: var(--radius-lg);
+}
+
+.soft-pressed {
+    background: var(--surface-card);
+    box-shadow:
+        inset 4px 4px 8px var(--color-black-a10),
+        inset -4px -4px 8px var(--color-white-a80);
+    border-radius: var(--radius-lg);
+}
+
+.theme-dark .soft-raised {
+    box-shadow:
+        6px 6px 12px var(--color-black-a40),
+        -6px -6px 12px var(--color-white-a5);
+}
+
+.theme-dark .soft-pressed {
+    box-shadow:
+        inset 4px 4px 8px var(--color-black-a40),
+        inset -4px -4px 8px var(--color-white-a5);
+}
+
+/* ===========================================
+   GLOW EFFECTS
+   For interactive elements with color glow
+   =========================================== */
+
+.glow-primary {
+    box-shadow: var(--shadow-glow-primary);
+}
+
+.glow-secondary {
+    box-shadow: var(--shadow-glow-secondary);
+}
+
+.glow-tertiary {
+    box-shadow: var(--shadow-glow-tertiary);
+}
+
+.glow-success {
+    box-shadow: var(--shadow-glow-success);
+}
+
+.glow-warning {
+    box-shadow: var(--shadow-glow-warning);
+}
+
+.glow-danger {
+    box-shadow: var(--shadow-glow-danger);
+}
+
+/* Hover glow effect */
+.hover-glow-primary:hover { box-shadow: var(--shadow-glow-primary); }
+.hover-glow-secondary:hover { box-shadow: var(--shadow-glow-secondary); }
+.hover-glow-tertiary:hover { box-shadow: var(--shadow-glow-tertiary); }
+
+/* ===========================================
+   ELEVATION UTILITIES
+   Quick elevation class helpers
+   =========================================== */
+
+.elevation-0 { box-shadow: var(--elevation-0); }
+.elevation-1 { box-shadow: var(--elevation-1); }
+.elevation-2 { box-shadow: var(--elevation-2); }
+.elevation-3 { box-shadow: var(--elevation-3); }
+.elevation-4 { box-shadow: var(--elevation-4); }
+.elevation-6 { box-shadow: var(--elevation-6); }
+.elevation-8 { box-shadow: var(--elevation-8); }
+.elevation-12 { box-shadow: var(--elevation-12); }
+.elevation-16 { box-shadow: var(--elevation-16); }
+.elevation-24 { box-shadow: var(--elevation-24); }
+
+/* Soft shadow utilities */
+.shadow-soft-sm { box-shadow: var(--shadow-soft-sm); }
+.shadow-soft { box-shadow: var(--shadow-soft); }
+.shadow-soft-lg { box-shadow: var(--shadow-soft-lg); }
+.shadow-soft-xl { box-shadow: var(--shadow-soft-xl); }
+
+/* ===========================================
+   ANIMATION UTILITIES
+   Keyframe animations for micro-interactions
+   =========================================== */
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes ping {
+    75%, 100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(-25%);
+        animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+    }
+    50% {
+        transform: translateY(0);
+        animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+    20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+/* Animation utility classes */
+.animate-pulse { animation: pulse 2s var(--ease-in-out) infinite; }
+.animate-spin { animation: spin 1s linear infinite; }
+.animate-ping { animation: ping 1s var(--ease-out) infinite; }
+.animate-bounce { animation: bounce 1s infinite; }
+.animate-shake { animation: shake 0.5s var(--ease-in-out); }
+
+/* Skeleton loading shimmer */
+.skeleton {
+    background: linear-gradient(
+        90deg,
+        var(--surface-hover) 25%,
+        var(--surface-elevated) 50%,
+        var(--surface-hover) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: var(--radius-sm);
+}

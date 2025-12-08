@@ -1,22 +1,28 @@
 <template>
     <a
         class="Link"
-        :class="{
-            [`Link-kindHover--${kindHover}`]: label
-        }"
+        :class="[
+            `Link-hoverKind--${hoverKind}`,
+            {
+                'Link-hasLabel': label
+            }
+        ]"
         :href="href"
         :target="newTab ? '_blank' : '_self'"
         :rel="newTab ? 'noopener noreferrer' : undefined">
 
         <Icon
-            class="Icon"
+            v-if="icon"
+            class="LinkIcon"
             :icon="icon"
             :size="iconSize"
             :kind="iconKind" />
 
-        <div v-if="label">
+        <span
+            v-if="label"
+            class="LinkLabel">
             {{ label }}
-        </div>
+        </span>
 
     </a>
 </template>
@@ -29,7 +35,7 @@ export default {
         icon: { type: String, required: false },
         iconSize: { type: String, required: false },
         iconKind: { type: String, required: false },
-        kindHover: {
+        hoverKind: {
             type: String,
             default: 'default',
             validator: value => ['default', 'primary', 'secondary', 'tertiary'].includes(value)
@@ -39,18 +45,31 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.Link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp0-5);
+    text-decoration: none;
+    transition: color var(--duration-fast, 120ms) var(--ease-standard, ease);
+}
+
 .Link:hover {
-    color: var(--color-text-subtle);
     text-decoration: underline;
+    text-underline-offset: 2px;
 }
 
-.Icon {
-    padding-right: var(--sp0-5);
+.LinkIcon {
+    flex-shrink: 0;
 }
 
-.Link-kindHover--default:hover { color: var(--color-text-subtle); }
-.Link-kindHover--primary:hover { color: var(--color-primary); }
-.Link-kindHover--secondary:hover { color: var(--color-secondary); }
-.Link-kindHover--tertiary:hover { color: var(--color-tertiary); }
+.LinkLabel {
+    text-decoration: inherit;
+}
+
+/* Hover kind variants */
+.Link-hoverKind--default:hover { color: var(--color-text-1); }
+.Link-hoverKind--primary:hover { color: var(--color-primary); }
+.Link-hoverKind--secondary:hover { color: var(--color-secondary); }
+.Link-hoverKind--tertiary:hover { color: var(--color-tertiary); }
 </style>

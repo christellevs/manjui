@@ -1,18 +1,76 @@
 :root {
 
+    /* ===========================================
+       FONT FAMILIES
+       =========================================== */
+
     --font-main: sans-serif;
     --font-monospace: monospace;
 
-    --font-size: 16px;
-    --font-size-small: 14px;
-    --font-size-smaller: 12px;
-    --font-size-large: 18px;
-    --font-size-larger: 20px;
-    --font-size-headline: 42px;
+    /* ===========================================
+       FONT SIZE SCALE (1.25 ratio - Major Third)
+       =========================================== */
 
-    --font-weight: 400;
-    --font-weight-bold: 500;
-    --font-weight-boldest: 800;
+    --font-size-2xs: 10px;
+    --font-size-xs: 12px;
+    --font-size-sm: 14px;
+    --font-size-base: 16px;
+    --font-size-lg: 18px;
+    --font-size-xl: 20px;
+    --font-size-2xl: 24px;
+    --font-size-3xl: 30px;
+    --font-size-4xl: 36px;
+    --font-size-5xl: 48px;
+    --font-size-6xl: 60px;
 
-    --line-height: 1.5em;
+    /* Legacy aliases (for backwards compatibility) */
+    --font-size: var(--font-size-base);
+    --font-size-small: var(--font-size-sm);
+    --font-size-smaller: var(--font-size-xs);
+    --font-size-large: var(--font-size-lg);
+    --font-size-larger: var(--font-size-xl);
+    --font-size-headline: var(--font-size-5xl);
+
+    /* ===========================================
+       FONT WEIGHT SCALE
+       =========================================== */
+
+    --font-weight-thin: 100;
+    --font-weight-extralight: 200;
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --font-weight-extrabold: 800;
+    --font-weight-black: 900;
+
+    /* Legacy aliases */
+    --font-weight: var(--font-weight-normal);
+    --font-weight-boldest: var(--font-weight-extrabold);
+
+    /* ===========================================
+       LINE HEIGHT SCALE
+       =========================================== */
+
+    --leading-none: 1;
+    --leading-tight: 1.25;
+    --leading-snug: 1.375;
+    --leading-normal: 1.5;
+    --leading-relaxed: 1.625;
+    --leading-loose: 2;
+
+    /* Legacy alias */
+    --line-height: var(--leading-normal);
+
+    /* ===========================================
+       LETTER SPACING
+       =========================================== */
+
+    --tracking-tighter: -0.05em;
+    --tracking-tight: -0.025em;
+    --tracking-normal: 0;
+    --tracking-wide: 0.025em;
+    --tracking-wider: 0.05em;
+    --tracking-widest: 0.1em;
 }

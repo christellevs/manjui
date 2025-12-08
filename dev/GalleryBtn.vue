@@ -3,46 +3,38 @@
         <h2>Buttons</h2>
         <VGroup>
             <HGroup wrap>
-                <HGroup tagName="label">
-                    <input v-model="disabled" type="checkbox" />
-                    <div>Disabled</div>
-                </HGroup>
-                <HGroup tagName="label">
-                    <input v-model="focus" type="checkbox" />
-                    <div>Focus</div>
-                </HGroup>
-                <HGroup tagName="label">
-                    <input v-model="hover" type="checkbox" />
-                    <div>Hover</div>
-                </HGroup>
-                <HGroup tagName="label">
-                    <input v-model="active" type="checkbox" />
-                    <div>Active</div>
-                </HGroup>
-                <HGroup tagName="label">
-                    <input v-model="round" type="checkbox" />
-                    <div>Round</div>
-                </HGroup>
-                <HGroup tagName="label">
-                    <input v-model="outline" type="checkbox" />
-                    <div>Outline</div>
-                </HGroup>
-                <HGroup tagName="label">
-                    <input
-                        v-model="size"
-                        type="checkbox"
-                        true-value="small"
-                        false-value="" />
-                    <div>Small</div>
-                </HGroup>
-                <HGroup tagName="label">
-                    <input
-                        v-model="icon"
-                        type="checkbox"
-                        true-value="far fa-check-circle"
-                        false-value="" />
-                    <div>Icon</div>
-                </HGroup>
+                <Checkbox
+                    v-model="disabled"
+                    label="Disabled"
+                    kind="default" />
+                <Checkbox
+                    v-model="focus"
+                    label="Focus"
+                    kind="default" />
+                <Checkbox
+                    v-model="hover"
+                    label="Hover"
+                    kind="default" />
+                <Checkbox
+                    v-model="active"
+                    label="Active"
+                    kind="default" />
+                <Checkbox
+                    v-model="round"
+                    label="Round"
+                    kind="default" />
+                <Checkbox
+                    v-model="outline"
+                    label="Outline"
+                    kind="default" />
+                <Checkbox
+                    v-model="small"
+                    label="Small"
+                    kind="default" />
+                <Checkbox
+                    v-model="showIcon"
+                    label="Icon"
+                    kind="default" />
             </HGroup>
             <HGroup wrap>
                 <Btn
@@ -89,12 +81,20 @@ export default {
             active: false,
             round: false,
             outline: false,
-            size: undefined,
-            icon: undefined,
+            small: false,
+            showIcon: false,
         };
     },
 
     computed: {
+
+        size() {
+            return this.small ? 'small' : '';
+        },
+
+        icon() {
+            return this.showIcon ? 'far fa-check-circle' : '';
+        },
 
         tokens() {
             return [

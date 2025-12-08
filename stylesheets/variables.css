@@ -1,4 +1,7 @@
 @import './variables/spacing.css';
 @import './variables/typography.css';
 @import './variables/color-tokens.css';
+@import './variables/radius.css';
+@import './variables/elevation.css';
+@import './variables/transitions.css';
 @import './variables/commons.css';

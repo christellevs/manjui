@@ -1,4 +1,5 @@
 import Btn from './Btn.vue';
+import Checkbox from './Checkbox.vue';
 import Circle from './Circle.vue';
 import Divider from './Divider.vue';
 import HGroup from './HGroup.vue';
@@ -21,6 +22,7 @@ import VGroup from './VGroup.vue';
 
 export {
     Btn,
+    Checkbox,
     Circle,
     Divider,
     HGroup,

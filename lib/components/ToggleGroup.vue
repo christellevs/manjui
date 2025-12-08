@@ -1,9 +1,9 @@
 <template>
     <div
-        class="LanguageToggle"
+        class="ToggleGroup"
         :class="[
-            `LanguageToggle-${size}`,
-            `LanguageToggle-${kind}`,
+            `ToggleGroup-${size}`,
+            `ToggleGroup-${kind}`,
         ]"
         role="radiogroup"
         :aria-label="ariaLabel">
@@ -11,17 +11,25 @@
             class="Indicator"
             :style="indicatorStyle" />
         <button
-            v-for="(lang, index) in languages"
-            :key="lang"
+            v-for="(option, index) in normalizedOptions"
+            :key="option.value"
             ref="options"
             type="button"
             class="Option"
-            :class="{ 'Option-active': currentLanguage === lang }"
-            :title="`Switch to ${lang.toUpperCase()}`"
-            :aria-checked="currentLanguage === lang"
+            :class="{ 'Option-active': modelValue === option.value }"
+            :title="option.title || option.label"
+            :aria-checked="modelValue === option.value"
             role="radio"
-            @click="selectLanguage(lang, index)">
-            {{ lang.toUpperCase() }}
+            @click="selectOption(option.value, index)">
+            <i
+                v-if="option.icon"
+                :class="option.icon"
+                class="OptionIcon" />
+            <span
+                v-if="option.label && !iconOnly"
+                class="OptionLabel">
+                {{ option.label }}
+            </span>
         </button>
     </div>
 </template>
@@ -30,15 +38,16 @@
 export default {
 
     props: {
-        languages: {
-            type: Array,
-            default() {
-                return ['en', 'pt'];
-            }
+        modelValue: {
+            type: [String, Number, Boolean],
+            default: null
         },
-        current: {
-            type: String,
-            default: 'en'
+        options: {
+            type: Array,
+            required: true,
+            validator: function (value) {
+                return value.length > 0;
+            }
         },
         kind: {
             type: String,
@@ -54,25 +63,40 @@ export default {
                 return ['small', 'normal', 'large'].includes(value);
             }
         },
+        iconOnly: {
+            type: Boolean,
+            default: false
+        },
         ariaLabel: {
             type: String,
-            default: 'Language selection'
+            default: 'Toggle selection'
         }
     },
 
-    emits: ['change'],
+    emits: ['update:modelValue'],
 
     data() {
         return {
-            currentLanguage: this.current,
             activeIndex: 0,
         };
     },
 
     computed: {
 
+        normalizedOptions() {
+            const result = [];
+            for (const opt of this.options) {
+                if (typeof opt === 'object') {
+                    result.push(opt);
+                } else {
+                    result.push({ value: opt, label: String(opt) });
+                }
+            }
+            return result;
+        },
+
         indicatorStyle() {
-            const count = this.languages.length;
+            const count = this.normalizedOptions.length;
             const widthPercent = 100 / count;
             const offsetPercent = this.activeIndex * widthPercent;
             return {
@@ -85,36 +109,37 @@ export default {
 
     watch: {
 
-        current(newVal) {
-            this.currentLanguage = newVal;
-            this.activeIndex = this.languages.indexOf(newVal);
+        modelValue: {
+            immediate: true,
+            handler(newVal) {
+                this.updateActiveIndex(newVal);
+            }
         },
 
-        languages: {
-            immediate: true,
+        options: {
             handler() {
-                this.activeIndex = this.languages.indexOf(this.currentLanguage);
-                if (this.activeIndex < 0) {
-                    this.activeIndex = 0;
-                }
+                this.updateActiveIndex(this.modelValue);
             }
         }
 
     },
 
     mounted() {
-        this.activeIndex = this.languages.indexOf(this.currentLanguage);
-        if (this.activeIndex < 0) {
-            this.activeIndex = 0;
-        }
+        this.updateActiveIndex(this.modelValue);
     },
 
     methods: {
 
-        selectLanguage(lang, index) {
-            this.currentLanguage = lang;
+        updateActiveIndex(value) {
+            const index = this.normalizedOptions.findIndex(function (opt) {
+                return opt.value === value;
+            });
+            this.activeIndex = index >= 0 ? index : 0;
+        },
+
+        selectOption(value, index) {
             this.activeIndex = index;
-            this.$emit('change', lang);
+            this.$emit('update:modelValue', value);
         },
 
     }
@@ -123,7 +148,7 @@ export default {
 </script>
 
 <style scoped>
-.LanguageToggle {
+.ToggleGroup {
     /* Component variables */
     --Toggle-height: 36px;
     --Toggle-padding: 2px;
@@ -156,13 +181,13 @@ export default {
 }
 
 /* Neo-brutal hover lift */
-.LanguageToggle:hover {
+.ToggleGroup:hover {
     transform: translate(-1px, -1px);
     box-shadow: var(--shadow-hover, 3px 3px 0 var(--color-base-4));
 }
 
 /* Neo-brutal active press */
-.LanguageToggle:active {
+.ToggleGroup:active {
     transform: translate(1px, 1px);
     box-shadow: none;
 }
@@ -188,6 +213,10 @@ export default {
     z-index: 2;
     flex: 1;
     height: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp0-5, 4px);
     padding: 0 var(--sp1-5, 12px);
     min-width: var(--sp5, 40px);
     border: none;
@@ -211,6 +240,15 @@ export default {
     color: var(--Toggle-text-active);
 }
 
+.OptionIcon {
+    font-size: 1em;
+    line-height: 1;
+}
+
+.OptionLabel {
+    white-space: nowrap;
+}
+
 /* Focus state */
 .Option:focus-visible {
     outline: none;
@@ -221,22 +259,22 @@ export default {
    SIZE VARIANTS
    =========================================== */
 
-.LanguageToggle-small {
+.ToggleGroup-small {
     --Toggle-height: 28px;
     --Toggle-font-size: var(--font-size-xs, 12px);
 }
 
-.LanguageToggle-small .Option {
+.ToggleGroup-small .Option {
     padding: 0 var(--sp1, 8px);
     min-width: var(--sp4, 32px);
 }
 
-.LanguageToggle-large {
+.ToggleGroup-large {
     --Toggle-height: 44px;
     --Toggle-font-size: var(--font-size, 16px);
 }
 
-.LanguageToggle-large .Option {
+.ToggleGroup-large .Option {
     padding: 0 var(--sp2, 16px);
     min-width: var(--sp6, 48px);
 }
@@ -245,25 +283,25 @@ export default {
    KIND VARIANTS
    =========================================== */
 
-.LanguageToggle-default {
+.ToggleGroup-default {
     --Toggle-indicator-color: var(--color-text-0);
     --Toggle-indicator-shadow: 1px 1px 0 var(--color-text-2);
     --Toggle-text-active: var(--color-base-0);
 }
 
-.LanguageToggle-primary {
+.ToggleGroup-primary {
     --Toggle-indicator-color: var(--color-primary-2);
     --Toggle-indicator-shadow: 1px 1px 0 var(--color-primary-3);
     --Toggle-text-active: var(--color-primary-text);
 }
 
-.LanguageToggle-secondary {
+.ToggleGroup-secondary {
     --Toggle-indicator-color: var(--color-secondary-2);
     --Toggle-indicator-shadow: 1px 1px 0 var(--color-secondary-3);
     --Toggle-text-active: var(--color-secondary-text);
 }
 
-.LanguageToggle-tertiary {
+.ToggleGroup-tertiary {
     --Toggle-indicator-color: var(--color-tertiary-2);
     --Toggle-indicator-shadow: 1px 1px 0 var(--color-tertiary-3);
     --Toggle-text-active: var(--color-tertiary-text);
@@ -274,7 +312,7 @@ export default {
    =========================================== */
 
 @media (prefers-reduced-motion: reduce) {
-    .LanguageToggle,
+    .ToggleGroup,
     .Indicator,
     .Option {
         transition: none;

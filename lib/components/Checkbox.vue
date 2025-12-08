@@ -79,12 +79,15 @@ export default {
 
 <style scoped>
 .Checkbox {
-    --Checkbox-size: 20px;
-    --Checkbox-radius: var(--radius-sm, 4px);
+    --Checkbox-size: 22px;
+    --Checkbox-radius: var(--radius-sm, 6px);
     --Checkbox-color: var(--color-primary-2);
-    --Checkbox-bg: var(--surface-card, #fff);
-    --Checkbox-border: var(--surface-border, #ddd);
+    --Checkbox-bg: var(--surface-card, var(--color-base-0, #fff));
+    --Checkbox-border: var(--color-base-4);
+    --Checkbox-border-width: 2px;
     --Checkbox-gap: var(--sp1, 8px);
+    --Checkbox-shadow: var(--shadow-brutal-xs, 1px 1px 0 var(--color-base-3));
+    --Checkbox-shadow-hover: 2px 2px 0 var(--color-base-4);
 
     position: relative;
     display: inline-flex;
@@ -108,14 +111,15 @@ export default {
     width: var(--Checkbox-size);
     height: var(--Checkbox-size);
     flex-shrink: 0;
-    border: 2px solid var(--Checkbox-border);
+    border: var(--Checkbox-border-width) solid var(--Checkbox-border);
     border-radius: var(--Checkbox-radius);
     background: var(--Checkbox-bg);
+    box-shadow: var(--Checkbox-shadow);
     transition:
-        background-color var(--duration-fast, 120ms) var(--ease-standard, ease),
-        border-color var(--duration-fast, 120ms) var(--ease-standard, ease),
-        box-shadow var(--duration-fast, 120ms) var(--ease-standard, ease),
-        transform var(--duration-fast, 120ms) var(--ease-spring, cubic-bezier(0.34, 1.56, 0.64, 1));
+        background-color var(--duration-fast, 120ms) var(--ease-out, ease),
+        border-color var(--duration-fast, 120ms) var(--ease-out, ease),
+        box-shadow var(--duration-fast, 120ms) var(--ease-out, ease),
+        transform var(--duration-fast, 120ms) var(--ease-out, ease);
 }
 
 .CheckboxIcon {
@@ -136,32 +140,42 @@ export default {
 .Checkbox-checked .CheckboxControl {
     background: var(--Checkbox-color);
     border-color: var(--Checkbox-color);
+    box-shadow: 1px 1px 0 color-mix(in srgb, var(--Checkbox-color) 70%, black);
 }
 
 .Checkbox-checked .CheckboxCheck {
     stroke-dashoffset: 0;
 }
 
-/* Hover state */
+/* Hover state - Neo-brutal: lift up */
 .Checkbox:not(.Checkbox-disabled):hover .CheckboxControl {
     border-color: var(--Checkbox-color);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--Checkbox-color) 15%, transparent);
+    transform: translate(-1px, -1px);
+    box-shadow: var(--Checkbox-shadow-hover);
 }
 
 .Checkbox-checked:not(.Checkbox-disabled):hover .CheckboxControl {
     background: color-mix(in srgb, var(--Checkbox-color) 85%, black);
-    transform: scale(1.05);
+    transform: translate(-1px, -1px);
+    box-shadow: 2px 2px 0 color-mix(in srgb, var(--Checkbox-color) 70%, black);
 }
 
 /* Focus state */
 .CheckboxInput:focus-visible + .CheckboxControl {
     outline: none;
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--Checkbox-color) 30%, transparent);
+    transform: translate(-1px, -1px);
+    box-shadow: var(--Checkbox-shadow-hover);
 }
 
-/* Active/pressed state */
+/* Active/pressed state - Neo-brutal: press down */
 .Checkbox:not(.Checkbox-disabled):active .CheckboxControl {
-    transform: scale(0.92);
+    transform: translate(1px, 1px);
+    box-shadow: none;
+}
+
+.Checkbox-checked:not(.Checkbox-disabled):active .CheckboxControl {
+    transform: translate(1px, 1px);
+    box-shadow: none;
 }
 
 /* Disabled state */
@@ -207,16 +221,17 @@ export default {
    =========================================== */
 
 .Checkbox-switch .CheckboxControl {
-    --Checkbox-thumb-size: calc(var(--Checkbox-size) - 4px);
+    --Checkbox-thumb-size: calc(var(--Checkbox-size) - 8px);
     --Checkbox-switch-width: calc(var(--Checkbox-size) * 1.75);
     --Checkbox-thumb-offset: 2px;
-    --Checkbox-thumb-travel: calc(var(--Checkbox-switch-width) - var(--Checkbox-thumb-size) - var(--Checkbox-thumb-offset) * 2);
+    --Checkbox-thumb-travel: calc(var(--Checkbox-switch-width) - var(--Checkbox-thumb-size) - var(--Checkbox-thumb-offset) * 2 - var(--Checkbox-border-width) * 2);
 
     width: var(--Checkbox-switch-width);
     height: var(--Checkbox-size);
     border-radius: var(--Checkbox-size);
-    background: var(--Checkbox-border);
-    border: none;
+    background: var(--color-base-2, #eee);
+    border: var(--Checkbox-border-width) solid var(--Checkbox-border);
+    box-shadow: var(--Checkbox-shadow);
 }
 
 .CheckboxThumb {
@@ -227,32 +242,55 @@ export default {
     height: var(--Checkbox-thumb-size);
     border-radius: 50%;
     background: white;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 1px 2px rgba(0,0,0,0.1);
+    border: var(--Checkbox-border-width) solid var(--Checkbox-border);
+    box-shadow: 1px 1px 0 var(--color-base-4);
     transition:
         transform var(--duration-normal, 200ms) var(--ease-spring, cubic-bezier(0.34, 1.56, 0.64, 1)),
-        background-color var(--duration-fast, 120ms) var(--ease-standard, ease);
+        background-color var(--duration-fast, 120ms) var(--ease-out, ease),
+        border-color var(--duration-fast, 120ms) var(--ease-out, ease),
+        box-shadow var(--duration-fast, 120ms) var(--ease-out, ease);
 }
 
 .Checkbox-switch.Checkbox-checked .CheckboxControl {
     background: var(--Checkbox-color);
+    border-color: color-mix(in srgb, var(--Checkbox-color) 70%, black);
+    box-shadow: 1px 1px 0 color-mix(in srgb, var(--Checkbox-color) 70%, black);
 }
 
 .Checkbox-switch.Checkbox-checked .CheckboxThumb {
     transform: translateX(var(--Checkbox-thumb-travel));
+    background: white;
+    border-color: color-mix(in srgb, var(--Checkbox-color) 70%, black);
+    box-shadow: 1px 1px 0 color-mix(in srgb, var(--Checkbox-color) 70%, black);
 }
 
+/* Switch hover - Neo-brutal: lift up */
 .Checkbox-switch:not(.Checkbox-disabled):hover .CheckboxControl {
-    box-shadow: none;
-    border-color: transparent;
+    border-color: var(--Checkbox-color);
+    transform: translate(-1px, -1px);
+    box-shadow: var(--Checkbox-shadow-hover);
 }
 
 .Checkbox-switch:not(.Checkbox-disabled):hover .CheckboxThumb {
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2), 0 1px 2px rgba(0,0,0,0.1);
+    border-color: var(--Checkbox-color);
+    box-shadow: 1px 1px 0 var(--color-base-4);
+}
+
+.Checkbox-switch.Checkbox-checked:not(.Checkbox-disabled):hover .CheckboxControl {
+    background: color-mix(in srgb, var(--Checkbox-color) 85%, black);
+    border-color: color-mix(in srgb, var(--Checkbox-color) 60%, black);
+    box-shadow: 2px 2px 0 color-mix(in srgb, var(--Checkbox-color) 70%, black);
+}
+
+.Checkbox-switch.Checkbox-checked:not(.Checkbox-disabled):hover .CheckboxThumb {
+    border-color: color-mix(in srgb, var(--Checkbox-color) 60%, black);
+    box-shadow: 1px 1px 0 color-mix(in srgb, var(--Checkbox-color) 70%, black);
 }
 
 /* Switch focus */
 .Checkbox-switch .CheckboxInput:focus-visible + .CheckboxControl {
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--Checkbox-color) 30%, transparent);
+    transform: translate(-1px, -1px);
+    box-shadow: var(--Checkbox-shadow-hover);
 }
 
 /* ===========================================

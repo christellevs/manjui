@@ -2,19 +2,20 @@
 
     /* ===========================================
        BASE & TEXT COLORS
+       Warm, cream-tinted for soft neo-brutalism
        =========================================== */
 
-    --color-base-0: hsl(280deg, 10%, 100%);
-    --color-base-1: hsl(280deg, 10%, 96%);
-    --color-base-2: hsl(280deg, 10%, 92%);
-    --color-base-3: hsl(280deg, 10%, 88%);
-    --color-base-4: hsl(280deg, 10%, 80%);
+    --color-base-0: hsl(45deg, 30%, 99%);
+    --color-base-1: hsl(45deg, 20%, 96%);
+    --color-base-2: hsl(45deg, 15%, 92%);
+    --color-base-3: hsl(45deg, 12%, 86%);
+    --color-base-4: hsl(45deg, 10%, 78%);
 
-    --color-text-0: hsl(280deg, 10%, 20%);
-    --color-text-1: hsl(280deg, 10%, 48%);
-    --color-text-2: hsl(280deg, 10%, 64%);
-    --color-text-3: hsl(280deg, 10%, 72%);
-    --color-text-4: hsl(280deg, 10%, 78%);
+    --color-text-0: hsl(30deg, 15%, 18%);
+    --color-text-1: hsl(30deg, 10%, 44%);
+    --color-text-2: hsl(30deg, 8%, 60%);
+    --color-text-3: hsl(30deg, 6%, 70%);
+    --color-text-4: hsl(30deg, 5%, 76%);
 
     /* ===========================================
        ALPHA VARIANTS (for overlays & glass effects)
@@ -127,12 +128,12 @@
     --color-success-shadow: var(--color-success-4);
 
     --color-warning: var(--color-warning-3);
-    --color-warning-0: hsl(48deg, 88%, 85%);
-    --color-warning-1: hsl(48deg, 88%, 80%);
-    --color-warning-2: hsl(48deg, 88%, 60%);
-    --color-warning-3: hsl(48deg, 88%, 48%);
-    --color-warning-4: hsl(48deg, 60%, 28%);
-    --color-warning-text: #000;
+    --color-warning-0: hsl(38deg, 92%, 90%);
+    --color-warning-1: hsl(38deg, 92%, 78%);
+    --color-warning-2: hsl(38deg, 92%, 58%);
+    --color-warning-3: hsl(38deg, 92%, 50%);
+    --color-warning-4: hsl(38deg, 90%, 42%);
+    --color-warning-text: #fff;
     --color-warning-surface-top: var(--color-warning-1);
     --color-warning-surface-bottom: var(--color-warning-3);
     --color-warning-focus: var(--color-warning-0);
@@ -231,10 +232,10 @@
     --color-success-2: hsl(96deg, 50%, 60%);
     --color-success-3: hsl(96deg, 50%, 50%);
 
-    --color-warning-0: hsl(48deg, 78%, 85%);
-    --color-warning-1: hsl(48deg, 78%, 78%);
-    --color-warning-2: hsl(48deg, 78%, 62%);
-    --color-warning-3: hsl(48deg, 78%, 52%);
+    --color-warning-0: hsl(38deg, 85%, 88%);
+    --color-warning-1: hsl(38deg, 85%, 75%);
+    --color-warning-2: hsl(38deg, 85%, 60%);
+    --color-warning-3: hsl(38deg, 85%, 52%);
 
     --color-danger-0: hsl(350deg, 78%, 88%);
     --color-danger-1: hsl(350deg, 78%, 72%);

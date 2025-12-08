@@ -7,3 +7,6 @@
 @import './modules/transitions.css';
 @import './modules/utils.css';
 @import './modules/modern.css';
+
+/* Theme variants */
+@import './themes/soft-brutal.css';

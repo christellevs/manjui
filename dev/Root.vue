@@ -15,7 +15,12 @@
             <GalleryBtn />
             <GalleryCheckbox />
             <GalleryInput />
+            <GalleryForm />
             <GalleryTab />
+            <GalleryLayout />
+            <GalleryData />
+            <GalleryFeedback />
+            <GalleryUtility />
         </div>
     </div>
 </template>
@@ -24,8 +29,13 @@
 import DesignSystem from './DesignSystem.vue';
 import GalleryBtn from './GalleryBtn.vue';
 import GalleryCheckbox from './GalleryCheckbox.vue';
+import GalleryData from './GalleryData.vue';
+import GalleryFeedback from './GalleryFeedback.vue';
+import GalleryForm from './GalleryForm.vue';
 import GalleryInput from './GalleryInput.vue';
+import GalleryLayout from './GalleryLayout.vue';
 import GalleryTab from './GalleryTab.vue';
+import GalleryUtility from './GalleryUtility.vue';
 import Usage from './Usage.vue';
 
 export default {
@@ -34,8 +44,13 @@ export default {
         DesignSystem,
         GalleryBtn,
         GalleryCheckbox,
+        GalleryData,
+        GalleryFeedback,
+        GalleryForm,
         GalleryInput,
+        GalleryLayout,
         GalleryTab,
+        GalleryUtility,
         Usage,
     },
 

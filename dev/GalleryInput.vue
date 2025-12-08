@@ -5,42 +5,34 @@
         <VGroup gap="2">
 
             <HGroup wrap>
-                <HGroup tagName="label">
-                    <input v-model="disabled" type="checkbox" />
-                    <div>Disabled</div>
-                </HGroup>
-                <HGroup tagName="label">
-                    <input v-model="focus" type="checkbox" />
-                    <div>Focus</div>
-                </HGroup>
-                <HGroup tagName="label">
-                    <input v-model="hover" type="checkbox" />
-                    <div>Hover</div>
-                </HGroup>
-                <HGroup tagName="label">
-                    <input v-model="round" type="checkbox" />
-                    <div>Round</div>
-                </HGroup>
-                <HGroup tagName="label">
-                    <input v-model="invalid" type="checkbox" />
-                    <div>Invalid</div>
-                </HGroup>
-                <HGroup tagName="label">
-                    <input
-                        v-model="size"
-                        type="checkbox"
-                        true-value="small"
-                        false-value="" />
-                    <div>Small</div>
-                </HGroup>
-                <HGroup tagName="label">
-                    <input
-                        v-model="icon"
-                        type="checkbox"
-                        true-value="far fa-check-circle"
-                        false-value="" />
-                    <div>Icon</div>
-                </HGroup>
+                <Checkbox
+                    v-model="disabled"
+                    label="Disabled"
+                    kind="default" />
+                <Checkbox
+                    v-model="focus"
+                    label="Focus"
+                    kind="default" />
+                <Checkbox
+                    v-model="hover"
+                    label="Hover"
+                    kind="default" />
+                <Checkbox
+                    v-model="round"
+                    label="Round"
+                    kind="default" />
+                <Checkbox
+                    v-model="invalid"
+                    label="Invalid"
+                    kind="default" />
+                <Checkbox
+                    v-model="small"
+                    label="Small"
+                    kind="default" />
+                <Checkbox
+                    v-model="showIcon"
+                    label="Icon"
+                    kind="default" />
             </HGroup>
 
             <InputText
@@ -123,9 +115,21 @@ export default {
             hover: false,
             round: false,
             invalid: false,
-            size: undefined,
-            icon: undefined,
+            small: false,
+            showIcon: false,
         };
+    },
+
+    computed: {
+
+        size() {
+            return this.small ? 'small' : '';
+        },
+
+        icon() {
+            return this.showIcon ? 'far fa-check-circle' : '';
+        },
+
     },
 
 };

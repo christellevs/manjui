@@ -1,26 +1,26 @@
 /* ===========================================
    BORDER RADIUS SCALE
-   Expanded scale for modern UI design
+   Soft neo-brutalism: Larger, friendlier radii
    =========================================== */
 
 :root {
-    /* Base radius unit */
-    --radius-unit: 4px;
+    /* Base radius unit - larger for friendlier feel */
+    --radius-unit: 6px;
 
     /* Radius scale */
     --radius-none: 0;
-    --radius-xs: 2px;
-    --radius-sm: var(--radius-unit);                    /* 4px */
-    --radius-md: calc(var(--radius-unit) * 2);          /* 8px */
-    --radius-lg: calc(var(--radius-unit) * 3);          /* 12px */
-    --radius-xl: calc(var(--radius-unit) * 4);          /* 16px */
-    --radius-2xl: calc(var(--radius-unit) * 6);         /* 24px */
-    --radius-3xl: calc(var(--radius-unit) * 8);         /* 32px */
+    --radius-xs: 4px;
+    --radius-sm: var(--radius-unit);                    /* 6px */
+    --radius-md: calc(var(--radius-unit) * 2);          /* 12px */
+    --radius-lg: calc(var(--radius-unit) * 3);          /* 18px */
+    --radius-xl: calc(var(--radius-unit) * 4);          /* 24px */
+    --radius-2xl: calc(var(--radius-unit) * 5);         /* 30px */
+    --radius-3xl: calc(var(--radius-unit) * 6);         /* 36px */
     --radius-full: 9999px;
 
-    /* Semantic radius aliases */
-    --border-radius: var(--radius-md);                  /* 8px - default */
-    --border-radius-small: var(--radius-sm);            /* 4px */
-    --border-radius-round: var(--radius-xl);            /* 16px */
+    /* Semantic radius aliases - larger defaults for soft brutalism */
+    --border-radius: var(--radius-lg);                  /* 18px - default (was 8px) */
+    --border-radius-small: var(--radius-md);            /* 12px (was 4px) */
+    --border-radius-round: var(--radius-xl);            /* 24px */
     --border-radius-pill: var(--radius-full);           /* pill shape */
 }

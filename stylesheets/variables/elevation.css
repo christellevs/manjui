@@ -1,46 +1,80 @@
 /* ===========================================
    ELEVATION & SHADOW SYSTEM
-   Material Design inspired elevation scale
+   Soft Neo-Brutalism style with offset shadows
    =========================================== */
 
 :root {
-    /* Material Design elevation shadows */
-    --elevation-0: none;
-    --elevation-1: 0 2px 1px -1px hsla(0, 0%, 0%, 0.2),
-                   0 1px 1px 0 hsla(0, 0%, 0%, 0.14),
-                   0 1px 3px 0 hsla(0, 0%, 0%, 0.12);
-    --elevation-2: 0 3px 1px -2px hsla(0, 0%, 0%, 0.2),
-                   0 2px 2px 0 hsla(0, 0%, 0%, 0.14),
-                   0 1px 5px 0 hsla(0, 0%, 0%, 0.12);
-    --elevation-3: 0 3px 3px -2px hsla(0, 0%, 0%, 0.2),
-                   0 3px 4px 0 hsla(0, 0%, 0%, 0.14),
-                   0 1px 8px 0 hsla(0, 0%, 0%, 0.12);
-    --elevation-4: 0 2px 4px -1px hsla(0, 0%, 0%, 0.2),
-                   0 4px 5px 0 hsla(0, 0%, 0%, 0.14),
-                   0 1px 10px 0 hsla(0, 0%, 0%, 0.12);
-    --elevation-6: 0 3px 5px -1px hsla(0, 0%, 0%, 0.2),
-                   0 6px 10px 0 hsla(0, 0%, 0%, 0.14),
-                   0 1px 18px 0 hsla(0, 0%, 0%, 0.12);
-    --elevation-8: 0 5px 5px -3px hsla(0, 0%, 0%, 0.2),
-                   0 8px 10px 1px hsla(0, 0%, 0%, 0.14),
-                   0 3px 14px 2px hsla(0, 0%, 0%, 0.12);
-    --elevation-12: 0 7px 8px -4px hsla(0, 0%, 0%, 0.2),
-                    0 12px 17px 2px hsla(0, 0%, 0%, 0.14),
-                    0 5px 22px 4px hsla(0, 0%, 0%, 0.12);
-    --elevation-16: 0 8px 10px -5px hsla(0, 0%, 0%, 0.2),
-                    0 16px 24px 2px hsla(0, 0%, 0%, 0.14),
-                    0 6px 30px 5px hsla(0, 0%, 0%, 0.12);
-    --elevation-24: 0 11px 15px -7px hsla(0, 0%, 0%, 0.2),
-                    0 24px 38px 3px hsla(0, 0%, 0%, 0.14),
-                    0 9px 46px 8px hsla(0, 0%, 0%, 0.12);
+    /* ===========================================
+       NEO-BRUTAL OFFSET SHADOWS (Default Style)
+       The signature offset shadow look
+       =========================================== */
 
-    /* Soft shadows - more diffused, modern aesthetic */
+    /* Soft offset shadows - the signature neo-brutal look, but gentle */
+    --shadow-brutal-xs: 1px 1px 0 var(--shadow-color, var(--color-base-3));
+    --shadow-brutal-sm: 2px 2px 0 var(--shadow-color, var(--color-base-3));
+    --shadow-brutal: 3px 3px 0 var(--shadow-color, var(--color-base-3));
+    --shadow-brutal-md: 3px 3px 0 var(--shadow-color, var(--color-base-4));
+    --shadow-brutal-lg: 4px 4px 0 var(--shadow-color, var(--color-base-4));
+
+    /* Colored offset shadows for interactive elements */
+    --shadow-brutal-primary: 2px 2px 0 var(--color-primary-3);
+    --shadow-brutal-secondary: 2px 2px 0 var(--color-secondary-3);
+    --shadow-brutal-tertiary: 2px 2px 0 var(--color-tertiary-3);
+    --shadow-brutal-success: 2px 2px 0 var(--color-success-3);
+    --shadow-brutal-warning: 2px 2px 0 var(--color-warning-3);
+    --shadow-brutal-danger: 2px 2px 0 var(--color-danger-3);
+
+    /* ===========================================
+       ELEVATION SCALE (Using offset shadows)
+       =========================================== */
+
+    --elevation-0: none;
+    --elevation-1: var(--shadow-brutal-xs);
+    --elevation-2: var(--shadow-brutal-sm);
+    --elevation-3: var(--shadow-brutal);
+    --elevation-4: var(--shadow-brutal-md);
+    --elevation-6: var(--shadow-brutal-lg);
+    --elevation-8: 4px 4px 0 var(--shadow-color, var(--color-base-4));
+    --elevation-12: 5px 5px 0 var(--shadow-color, var(--color-base-4));
+    --elevation-16: 6px 6px 0 var(--shadow-color, var(--color-base-4));
+    --elevation-24: 8px 8px 0 var(--shadow-color, var(--color-base-4));
+
+    /* ===========================================
+       HOVER ELEVATED SHADOWS
+       For the lift-up effect on hover
+       =========================================== */
+
+    --shadow-hover: 3px 3px 0 var(--shadow-color, var(--color-base-4));
+    --shadow-hover-primary: 3px 3px 0 var(--color-primary-3);
+    --shadow-hover-secondary: 3px 3px 0 var(--color-secondary-3);
+    --shadow-hover-tertiary: 3px 3px 0 var(--color-tertiary-3);
+    --shadow-hover-success: 3px 3px 0 var(--color-success-3);
+    --shadow-hover-warning: 3px 3px 0 var(--color-warning-3);
+    --shadow-hover-danger: 3px 3px 0 var(--color-danger-3);
+
+    /* ===========================================
+       PRESSED SHADOWS
+       For the press-down effect on active
+       =========================================== */
+
+    --shadow-pressed: 1px 1px 0 var(--shadow-color, var(--color-base-3));
+    --shadow-pressed-primary: 1px 1px 0 var(--color-primary-3);
+    --shadow-pressed-secondary: 1px 1px 0 var(--color-secondary-3);
+    --shadow-pressed-tertiary: 1px 1px 0 var(--color-tertiary-3);
+
+    /* ===========================================
+       SOFT SHADOWS (Alternative style)
+       =========================================== */
+
     --shadow-soft-sm: 0 2px 8px -2px hsla(280, 10%, 20%, 0.1);
     --shadow-soft: 0 4px 16px -4px hsla(280, 10%, 20%, 0.15);
     --shadow-soft-lg: 0 8px 32px -8px hsla(280, 10%, 20%, 0.2);
     --shadow-soft-xl: 0 16px 48px -12px hsla(280, 10%, 20%, 0.25);
 
-    /* Glow shadows - for interactive/colored elements */
+    /* ===========================================
+       GLOW SHADOWS (For special emphasis)
+       =========================================== */
+
     --shadow-glow-primary: 0 4px 16px -4px hsla(310, 64%, 50%, 0.4);
     --shadow-glow-secondary: 0 4px 16px -4px hsla(290, 50%, 60%, 0.4);
     --shadow-glow-tertiary: 0 4px 16px -4px hsla(176, 50%, 50%, 0.4);
@@ -48,41 +82,28 @@
     --shadow-glow-warning: 0 4px 16px -4px hsla(48, 88%, 48%, 0.4);
     --shadow-glow-danger: 0 4px 16px -4px hsla(350, 88%, 60%, 0.4);
 
-    /* Inset shadows - for pressed/sunken states */
+    /* ===========================================
+       INSET SHADOWS (For pressed/sunken states)
+       =========================================== */
+
     --shadow-inset-sm: inset 0 1px 2px hsla(0, 0%, 0%, 0.1);
     --shadow-inset: inset 0 2px 4px hsla(0, 0%, 0%, 0.15);
     --shadow-inset-lg: inset 0 4px 8px hsla(0, 0%, 0%, 0.2);
 }
 
 .theme-dark {
-    /* Softer shadows for dark mode */
-    --elevation-1: 0 2px 1px -1px hsla(0, 0%, 0%, 0.3),
-                   0 1px 1px 0 hsla(0, 0%, 0%, 0.24),
-                   0 1px 3px 0 hsla(0, 0%, 0%, 0.22);
-    --elevation-2: 0 3px 1px -2px hsla(0, 0%, 0%, 0.3),
-                   0 2px 2px 0 hsla(0, 0%, 0%, 0.24),
-                   0 1px 5px 0 hsla(0, 0%, 0%, 0.22);
-    --elevation-3: 0 3px 3px -2px hsla(0, 0%, 0%, 0.3),
-                   0 3px 4px 0 hsla(0, 0%, 0%, 0.24),
-                   0 1px 8px 0 hsla(0, 0%, 0%, 0.22);
-    --elevation-4: 0 2px 4px -1px hsla(0, 0%, 0%, 0.3),
-                   0 4px 5px 0 hsla(0, 0%, 0%, 0.24),
-                   0 1px 10px 0 hsla(0, 0%, 0%, 0.22);
-    --elevation-6: 0 3px 5px -1px hsla(0, 0%, 0%, 0.3),
-                   0 6px 10px 0 hsla(0, 0%, 0%, 0.24),
-                   0 1px 18px 0 hsla(0, 0%, 0%, 0.22);
-    --elevation-8: 0 5px 5px -3px hsla(0, 0%, 0%, 0.3),
-                   0 8px 10px 1px hsla(0, 0%, 0%, 0.24),
-                   0 3px 14px 2px hsla(0, 0%, 0%, 0.22);
-    --elevation-12: 0 7px 8px -4px hsla(0, 0%, 0%, 0.3),
-                    0 12px 17px 2px hsla(0, 0%, 0%, 0.24),
-                    0 5px 22px 4px hsla(0, 0%, 0%, 0.22);
-    --elevation-16: 0 8px 10px -5px hsla(0, 0%, 0%, 0.3),
-                    0 16px 24px 2px hsla(0, 0%, 0%, 0.24),
-                    0 6px 30px 5px hsla(0, 0%, 0%, 0.22);
-    --elevation-24: 0 11px 15px -7px hsla(0, 0%, 0%, 0.3),
-                    0 24px 38px 3px hsla(0, 0%, 0%, 0.24),
-                    0 9px 46px 8px hsla(0, 0%, 0%, 0.22);
+    /* Dark mode uses deeper shadow color */
+    --shadow-color: var(--color-base-0);
+
+    /* Adjust brutal shadows for dark mode */
+    --shadow-brutal-xs: 1px 1px 0 var(--shadow-color);
+    --shadow-brutal-sm: 2px 2px 0 var(--shadow-color);
+    --shadow-brutal: 3px 3px 0 var(--shadow-color);
+    --shadow-brutal-md: 3px 3px 0 var(--shadow-color);
+    --shadow-brutal-lg: 4px 4px 0 var(--shadow-color);
+
+    --shadow-hover: 3px 3px 0 var(--shadow-color);
+    --shadow-pressed: 1px 1px 0 var(--shadow-color);
 
     /* Soft shadows for dark mode */
     --shadow-soft-sm: 0 2px 8px -2px hsla(0, 0%, 0%, 0.3);

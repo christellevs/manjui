@@ -26,7 +26,7 @@
         @mouseenter="hover = true"
         @mouseleave="hover = false">
 
-        <span class="Btn-ripple-container"></span>
+        <span class="Btn-ripple-container" />
 
         <slot
             name="icon"
@@ -107,24 +107,26 @@ export default {
         },
 
         createRipple(event) {
-            if (this.disabled || this.blocked) return;
-            
+            if (this.disabled || this.blocked) {
+                return;
+            }
+
             const button = this.$refs.button;
             const rippleContainer = button.querySelector('.Btn-ripple-container');
             const rect = button.getBoundingClientRect();
-            
+
             const ripple = document.createElement('span');
             ripple.className = 'Btn-ripple';
-            
+
             const diameter = Math.max(rect.width, rect.height);
             const radius = diameter / 2;
-            
+
             ripple.style.width = ripple.style.height = `${diameter}px`;
             ripple.style.left = `${event.clientX - rect.left - radius}px`;
             ripple.style.top = `${event.clientY - rect.top - radius}px`;
-            
+
             rippleContainer.appendChild(ripple);
-            
+
             setTimeout(() => {
                 ripple.remove();
             }, 600);
@@ -147,10 +149,17 @@ export default {
     --Btn-border-radius: var(--border-radius);
     --Btn-bg-hover-color: color-mix(in srgb, var(--Btn-bg-color) 92%, white);
 
+    /* Neo-brutal styling variables */
+    --Btn-border-color: var(--color-base-4);
+    --Btn-shadow-color: var(--color-base-4);
+    --Btn-shadow: var(--shadow-brutal-sm);
+    --Btn-shadow-hover: var(--shadow-hover);
+    --Btn-shadow-active: var(--shadow-pressed);
+
     /* Use global transition and state layer variables */
-    --Btn-ease: var(--ease-standard, cubic-bezier(0.2, 0, 0, 1));
+    --Btn-ease: var(--ease-out, cubic-bezier(0, 0, 0.2, 1));
     --Btn-duration-short: var(--duration-fast, 120ms);
-    --Btn-duration: var(--duration-normal, 200ms);
+    --Btn-duration: var(--duration-fast, 120ms);
     --Btn-duration-long: var(--duration-slow, 320ms);
     --state-layer-hover-opacity: var(--state-layer-hover, 0.08);
     --state-layer-focus-opacity: var(--state-layer-focus, 0.12);
@@ -173,7 +182,8 @@ export default {
     flex-shrink: 0;
     gap: var(--Btn-gap);
 
-    border: none;
+    /* Neo-brutal: visible border */
+    border: 2px solid var(--Btn-border-color);
     border-radius: var(--Btn-border-radius);
     cursor: pointer;
     user-select: none;
@@ -187,9 +197,11 @@ export default {
 
     color: var(--Btn-text-color);
     background-color: var(--Btn-bg-color);
-    box-shadow: var(--elevation-1);
 
-    transition: 
+    /* Neo-brutal: offset shadow */
+    box-shadow: var(--Btn-shadow);
+
+    transition:
         background-color var(--Btn-duration) var(--Btn-ease),
         box-shadow var(--Btn-duration) var(--Btn-ease),
         color var(--Btn-duration) var(--Btn-ease),
@@ -240,10 +252,10 @@ export default {
     }
 }
 
-/* Hover state */
+/* Hover state - Neo-brutal: lift up */
 .Btn:not(:disabled):hover, .Btn.Btn-pseudo-hover {
-    box-shadow: var(--elevation-3);
-    transform: translateY(-1px);
+    transform: translate(-2px, -2px);
+    box-shadow: var(--Btn-shadow-hover);
     /* apply per-kind hover color */
     --Btn-bg-color: var(--Btn-bg-hover-color);
 }
@@ -252,10 +264,11 @@ export default {
     opacity: var(--state-layer-hover-opacity);
 }
 
-/* Focus state - Material style focus */
+/* Focus state */
 .Btn:not(:disabled):focus-visible, .Btn.Btn-pseudo-focus {
     outline: none;
-    box-shadow: var(--elevation-3);
+    transform: translate(-2px, -2px);
+    box-shadow: var(--Btn-shadow-hover);
 }
 
 .Btn:not(:disabled):focus-visible::after {
@@ -271,10 +284,10 @@ export default {
     opacity: var(--state-layer-focus-opacity);
 }
 
-/* Active state */
+/* Active state - Neo-brutal: press down */
 .Btn:not(:disabled):active, .Btn.Btn-pseudo-active {
-    box-shadow: var(--elevation-1);
-    transform: translateY(0);
+    transform: translate(2px, 2px);
+    box-shadow: var(--Btn-shadow-active);
 }
 .Btn:not(:disabled):active::before,
 .Btn.Btn-pseudo-active::before {
@@ -361,20 +374,26 @@ export default {
     order: 100;
 }
 
-/* Kinds - Material Design style */
+/* Kinds - Neo-brutal style with colored borders and shadows */
 
 .Btn-default {
     --Btn-text-color: var(--color-text-0);
     --Btn-bg-color: var(--color-base-1);
+    --Btn-border-color: var(--color-base-4);
     --Btn-focus-color: var(--color-text-2);
     --Btn-bg-hover-color: var(--color-base-2);
+    --Btn-shadow: var(--shadow-brutal-sm);
+    --Btn-shadow-hover: var(--shadow-hover);
 }
 
 .Btn-primary {
     --Btn-text-color: var(--color-primary-text);
     --Btn-bg-color: var(--color-primary-2);
+    --Btn-border-color: var(--color-primary-3);
     --Btn-focus-color: var(--color-primary-0);
     --Btn-bg-hover-color: color-mix(in srgb, var(--color-primary-2) 92%, white);
+    --Btn-shadow: var(--shadow-brutal-primary);
+    --Btn-shadow-hover: var(--shadow-hover-primary);
 }
 
 .Btn-primary .Btn-ripple {
@@ -384,8 +403,11 @@ export default {
 .Btn-secondary {
     --Btn-text-color: var(--color-secondary-text);
     --Btn-bg-color: var(--color-secondary-2);
+    --Btn-border-color: var(--color-secondary-3);
     --Btn-focus-color: var(--color-secondary-0);
     --Btn-bg-hover-color: color-mix(in srgb, var(--color-secondary-2) 92%, white);
+    --Btn-shadow: var(--shadow-brutal-secondary);
+    --Btn-shadow-hover: var(--shadow-hover-secondary);
 }
 
 .Btn-secondary .Btn-ripple {
@@ -395,8 +417,11 @@ export default {
 .Btn-tertiary {
     --Btn-text-color: var(--color-tertiary-text);
     --Btn-bg-color: var(--color-tertiary-2);
+    --Btn-border-color: var(--color-tertiary-3);
     --Btn-focus-color: var(--color-tertiary-0);
     --Btn-bg-hover-color: color-mix(in srgb, var(--color-tertiary-2) 92%, white);
+    --Btn-shadow: var(--shadow-brutal-tertiary);
+    --Btn-shadow-hover: var(--shadow-hover-tertiary);
 }
 
 .Btn-tertiary .Btn-ripple {
@@ -406,8 +431,11 @@ export default {
 .Btn-success {
     --Btn-text-color: var(--color-success-text);
     --Btn-bg-color: var(--color-success-2);
+    --Btn-border-color: var(--color-success-3);
     --Btn-focus-color: var(--color-success-0);
     --Btn-bg-hover-color: color-mix(in srgb, var(--color-success-2) 92%, white);
+    --Btn-shadow: var(--shadow-brutal-success);
+    --Btn-shadow-hover: var(--shadow-hover-success);
 }
 
 .Btn-success .Btn-ripple {
@@ -417,8 +445,11 @@ export default {
 .Btn-warning {
     --Btn-text-color: var(--color-warning-text);
     --Btn-bg-color: var(--color-warning-3);
+    --Btn-border-color: var(--color-warning-4);
     --Btn-focus-color: var(--color-warning-0);
     --Btn-bg-hover-color: color-mix(in srgb, var(--color-warning-3) 92%, black);
+    --Btn-shadow: var(--shadow-brutal-warning);
+    --Btn-shadow-hover: var(--shadow-hover-warning);
 }
 
 .Btn-warning .Btn-ripple {
@@ -428,16 +459,18 @@ export default {
 .Btn-danger {
     --Btn-text-color: var(--color-danger-text);
     --Btn-bg-color: var(--color-danger-2);
+    --Btn-border-color: var(--color-danger-3);
     --Btn-focus-color: var(--color-danger-0);
     --Btn-bg-hover-color: color-mix(in srgb, var(--color-danger-2) 92%, white);
+    --Btn-shadow: var(--shadow-brutal-danger);
+    --Btn-shadow-hover: var(--shadow-hover-danger);
 }
 
 .Btn-danger .Btn-ripple {
     background: radial-gradient(circle, hsla(350deg, 88%, 90%, 0.4) 0%, transparent 70%);
 }
 
-
-/* Text/Link buttons - Material text button style */
+/* Text/Link buttons - No shadow, just text */
 .Btn-link-default,
 .Btn-link-primary,
 .Btn-link-secondary,
@@ -446,6 +479,7 @@ export default {
 .Btn-link-warning,
 .Btn-link-danger {
     --Btn-bg-color: transparent;
+    border: none;
     box-shadow: none;
 }
 
@@ -456,8 +490,20 @@ export default {
 .Btn-link-success:not(:disabled):hover,
 .Btn-link-warning:not(:disabled):hover,
 .Btn-link-danger:not(:disabled):hover {
+    transform: none;
     box-shadow: none;
     color: color-mix(in srgb, currentColor 88%, white);
+}
+
+.Btn-link-default:not(:disabled):active,
+.Btn-link-primary:not(:disabled):active,
+.Btn-link-secondary:not(:disabled):active,
+.Btn-link-tertiary:not(:disabled):active,
+.Btn-link-success:not(:disabled):active,
+.Btn-link-warning:not(:disabled):active,
+.Btn-link-danger:not(:disabled):active {
+    transform: none;
+    box-shadow: none;
 }
 
 .Btn-link-default {
@@ -495,51 +541,57 @@ export default {
     --Btn-focus-color: var(--color-danger-0);
 }
 
-/* Outlined buttons - Material style */
+/* Outlined buttons - Neo-brutal with offset shadow */
 .Btn-outline {
     --Btn-bg-color: transparent;
-    border: 1px solid currentColor;
-    box-shadow: none;
+    --Btn-shadow: var(--shadow-brutal-sm);
+    --Btn-shadow-hover: var(--shadow-hover);
 }
 
 .Btn-outline.Btn-default {
-    border-color: var(--color-base-3);
+    --Btn-border-color: var(--color-base-4);
     --Btn-text-color: var(--color-text-0);
 }
 
 .Btn-outline.Btn-primary {
-    border-color: var(--color-primary-2);
+    --Btn-border-color: var(--color-primary-2);
     --Btn-text-color: var(--color-primary-2);
+    --Btn-shadow: var(--shadow-brutal-primary);
+    --Btn-shadow-hover: var(--shadow-hover-primary);
 }
 
 .Btn-outline.Btn-secondary {
-    border-color: var(--color-secondary-2);
+    --Btn-border-color: var(--color-secondary-2);
     --Btn-text-color: var(--color-secondary-2);
+    --Btn-shadow: var(--shadow-brutal-secondary);
+    --Btn-shadow-hover: var(--shadow-hover-secondary);
 }
 
 .Btn-outline.Btn-tertiary {
-    border-color: var(--color-tertiary-2);
+    --Btn-border-color: var(--color-tertiary-2);
     --Btn-text-color: var(--color-tertiary-2);
+    --Btn-shadow: var(--shadow-brutal-tertiary);
+    --Btn-shadow-hover: var(--shadow-hover-tertiary);
 }
 
 .Btn-outline.Btn-success {
-    border-color: var(--color-success-2);
+    --Btn-border-color: var(--color-success-2);
     --Btn-text-color: var(--color-success-2);
+    --Btn-shadow: var(--shadow-brutal-success);
+    --Btn-shadow-hover: var(--shadow-hover-success);
 }
 
 .Btn-outline.Btn-warning {
-    border-color: var(--color-warning-3);
+    --Btn-border-color: var(--color-warning-3);
     --Btn-text-color: var(--color-warning-3);
+    --Btn-shadow: var(--shadow-brutal-warning);
+    --Btn-shadow-hover: var(--shadow-hover-warning);
 }
 
 .Btn-outline.Btn-danger {
-    border-color: var(--color-danger-2);
+    --Btn-border-color: var(--color-danger-2);
     --Btn-text-color: var(--color-danger-2);
-}
-
-.Btn-outline:not(:disabled):hover {
-    box-shadow: none;
-    color: color-mix(in srgb, currentColor 88%, white);
-    border-color: color-mix(in srgb, currentColor 88%, white);
+    --Btn-shadow: var(--shadow-brutal-danger);
+    --Btn-shadow-hover: var(--shadow-hover-danger);
 }
 </style>

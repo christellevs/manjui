@@ -1,0 +1,79 @@
+/* ===========================================
+   SOFT NEO-BRUTALISM THEME
+   NOTE: These styles are now the DEFAULT in manjui.
+   This file is kept for backwards compatibility
+   and reference purposes only.
+   =========================================== */
+
+/* The .theme-soft-brutal class is no longer needed.
+   All components now use soft neo-brutalism by default.
+
+   Key characteristics of soft neo-brutalism:
+   - Offset shadows (the signature look)
+   - Visible but soft borders (2px solid)
+   - Warm, cream-tinted backgrounds
+   - Playful hover animations (lift up on hover, press down on click)
+   - Larger, friendlier border radius
+
+   Design tokens used:
+   - --shadow-brutal-* for offset shadows
+   - --shadow-hover-* for hover state shadows
+   - --shadow-pressed for active state
+   - Warm base colors with 45deg hue, cream tint
+   - --border-radius defaults to --radius-lg (18px)
+*/
+
+/* ===========================================
+   UTILITY CLASSES
+   These remain useful for custom elements
+   =========================================== */
+
+.brutal-shadow { box-shadow: var(--shadow-brutal); }
+.brutal-shadow-sm { box-shadow: var(--shadow-brutal-sm); }
+.brutal-shadow-lg { box-shadow: var(--shadow-brutal-lg); }
+.brutal-shadow-primary { box-shadow: var(--shadow-brutal-primary); }
+.brutal-shadow-secondary { box-shadow: var(--shadow-brutal-secondary); }
+
+.brutal-border { border: 2px solid var(--color-base-4); }
+.brutal-border-strong { border: 2px solid var(--color-text-2); }
+
+/* Hover lift effect utility */
+.brutal-hover {
+    transition:
+        transform var(--duration-fast) var(--ease-out),
+        box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.brutal-hover:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: var(--shadow-hover);
+}
+
+.brutal-hover:active {
+    transform: translate(1px, 1px);
+    box-shadow: none;
+}
+
+/* Card utility for custom card elements */
+.card,
+.Card {
+    border: 2px solid var(--color-base-4);
+    box-shadow: var(--shadow-brutal);
+    border-radius: var(--border-radius);
+    background: var(--surface-card);
+    transition:
+        transform var(--duration-fast) var(--ease-out),
+        box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.card:hover,
+.Card:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: var(--shadow-hover);
+}
+
+.card:active,
+.Card:active {
+    transform: translate(1px, 1px);
+    box-shadow: none;
+}

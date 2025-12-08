@@ -62,7 +62,7 @@ export default {
     --InputBase-outline-color-focus: var(--color-tertiary-focus);
     --InputBase-outline-color-invalid: var(--color-danger-focus);
 
-    --InputBase-border-color: var(--color-base-3);
+    --InputBase-border-color: var(--color-base-4);
     --InputBase-border-color-focus: var(--color-tertiary);
     --InputBase-border-color-invalid: var(--color-danger);
 
@@ -75,6 +75,8 @@ export default {
     --InputBase-label-surface-invalid: var(--InputBase-outline-color-invalid);
 
     --InputBase-border-radius: var(--border-radius);
+    --InputBase-shadow: var(--shadow-brutal-xs);
+    --InputBase-shadow-focus: var(--shadow-brutal-sm);
 
     position: relative;
     display: flex;
@@ -96,12 +98,20 @@ export default {
 
     color: var(--InputBase-text-color);
     background: var(--InputBase-surface);
-    outline: 2px solid var(--InputBase-outline-color);
-    border: 1px solid var(--InputBase-border-color);
+    outline: none;
+    border: 2px solid var(--InputBase-border-color);
     border-radius: var(--InputBase-border-radius);
     font-size: var(--InputBase-font-size);
 
-    transition: color .3s, outline .3s, border-radius .3s, filter .3s;
+    /* Neo-brutal: offset shadow */
+    box-shadow: var(--InputBase-shadow);
+
+    transition:
+        color var(--duration-fast, 120ms) var(--ease-out, ease),
+        border-color var(--duration-fast, 120ms) var(--ease-out, ease),
+        box-shadow var(--duration-fast, 120ms) var(--ease-out, ease),
+        transform var(--duration-fast, 120ms) var(--ease-out, ease),
+        filter var(--duration-fast, 120ms) var(--ease-out, ease);
 }
 
 .InputBase-fixed-height .Container {
@@ -123,19 +133,34 @@ export default {
     font-size: var(--InputBase-font-size);
 }
 
+/* Focus state - Neo-brutal: lift up */
+.InputBase:not(.InputBase-disabled):focus-within .Container,
+.InputBase.InputBase-pseudo-focus .Container {
+    transform: translate(-1px, -1px);
+    box-shadow: var(--InputBase-shadow-focus);
+    border-color: var(--InputBase-border-color-focus);
+}
+
 .InputBase:not(.InputBase-disabled):focus-within, .InputBase.InputBase-pseudo-focus {
     z-index: 10;
-    --InputBase-outline-color: var(--InputBase-outline-color-focus);
     --InputBase-border-color: var(--InputBase-border-color-focus);
     --InputBase-label-color: var(--InputBase-label-color-focus);
     --InputBase-label-surface: var(--InputBase-label-surface-focus);
 }
 
+/* Hover state */
+.InputBase:not(.InputBase-disabled):hover .Container {
+    border-color: var(--InputBase-border-color-focus);
+}
+
 .InputBase-invalid {
-    --InputBase-outline-color: var(--InputBase-outline-color-invalid);
     --InputBase-border-color: var(--InputBase-border-color-invalid);
     --InputBase-label-color: var(--InputBase-label-color-invalid);
     --InputBase-label-surface: var(--InputBase-label-surface-invalid);
+}
+
+.InputBase-invalid .Container {
+    box-shadow: 2px 2px 0 var(--color-danger-3);
 }
 
 .InputBase-round {

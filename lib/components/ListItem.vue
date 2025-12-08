@@ -118,6 +118,9 @@ export default {
 /* Divider */
 .ListItem-divider {
     border-bottom: 1px solid var(--color-base-3);
+}
+
+.ListItem-divider:not(.ListItem-selected) {
     border-radius: 0;
 }
 

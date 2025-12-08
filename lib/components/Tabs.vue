@@ -107,6 +107,7 @@ export default {
     padding: var(--sp) var(--sp) 0 var(--sp);
     background: var(--Tabs-header-bg);
     border-radius: calc(var(--border-radius) - 2px) calc(var(--border-radius) - 2px) 0 0;
+    border-bottom: 2px solid var(--Tabs-border);
 }
 
 /* Individual tab button */
@@ -146,6 +147,10 @@ export default {
     color: var(--Tabs-active-color);
     background: var(--Tabs-active-bg);
     font-weight: var(--font-weight-bold);
+    position: relative;
+    margin-bottom: -2px;
+    border: 2px solid var(--Tabs-border);
+    border-bottom-color: var(--Tabs-active-bg);
 }
 
 .TabsHeaderItem-active:hover:not(:disabled) {

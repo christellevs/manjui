@@ -23,7 +23,7 @@ export default {
 
 <style scoped>
 .Divider {
-    background-color: var(--color-text-0);
+    background-color: var(--color-base-3);
     width: 100%;
 }
 </style>

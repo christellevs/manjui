@@ -173,6 +173,7 @@ export default {
     padding: var(--sp1-5) var(--sp2);
     background: var(--Panel-header-bg);
     border-bottom: 2px solid var(--Panel-border);
+    border-radius: calc(var(--Panel-radius) - 2px) calc(var(--Panel-radius) - 2px) 0 0;
 }
 
 .Panel-collapsible .PanelHeader {
@@ -186,6 +187,7 @@ export default {
 
 .Panel-collapsed .PanelHeader {
     border-bottom: none;
+    border-radius: calc(var(--Panel-radius) - 2px);
 }
 
 .PanelHeaderContent {
@@ -258,6 +260,7 @@ export default {
     padding: var(--sp1-5) var(--sp2);
     background: var(--Panel-footer-bg);
     border-top: 2px solid var(--Panel-border);
+    border-radius: 0 0 calc(var(--Panel-radius) - 2px) calc(var(--Panel-radius) - 2px);
 }
 
 /* Reduced motion */

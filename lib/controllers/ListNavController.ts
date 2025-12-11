@@ -212,7 +212,7 @@ export class ListNavController {
             return [];
         }
         const els = this.container.querySelectorAll<HTMLElement>(this.selector);
-        return [...els];
+        return Array.from(els);
     }
 
     protected appendSelection(targetId: string) {

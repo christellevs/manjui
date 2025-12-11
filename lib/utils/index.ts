@@ -2,7 +2,12 @@ export * from './plugins.js';
 export * from '../managers/ThemeManager.js';
 export * from '../managers/UiManager.js';
 export * from '../managers/DateManager.js';
-export * from '../managers/NotificationsManager.js';
+export { NotificationsManager } from '../managers/NotificationsManager.js';
+export type {
+    NotificationLevel,
+    NotificationAction,
+    Notification as NotificationData,
+} from '../managers/NotificationsManager.js';
 export * from './provide.js';
 export * from './loader.js';
 export * from './init.js';

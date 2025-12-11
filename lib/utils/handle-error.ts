@@ -19,7 +19,7 @@ export function handleError(options: HandleErrorOptions) {
                 return await originalMethod.apply(this, args);
             } catch (error: unknown) {
                 console.warn(error);
-                const mesh = (this as Record<string, unknown>)[MESH_REF] as Mesh;
+                const mesh = (this as Record<string | symbol, unknown>)[MESH_REF] as Mesh;
                 const err = error as { name?: string };
                 const isAuthError = err.name === 'AuthenticationRequiredError';
 

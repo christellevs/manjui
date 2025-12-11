@@ -2,6 +2,9 @@
     <article>
         <h2>Usage</h2>
         <p>
+            Vue UI library & design system based on <a href="https://www.npmjs.com/package/nightshade" target="_blank">Nightshade UI</a>.
+        </p>
+        <p>
             Manjui is shipped for ESM environments and build systems like <a href="https://vite.dev" target="_blank">Vite</a>.
             The package consists of a tree-shakable ESM components bundle and a set of CSS files.
         </p>

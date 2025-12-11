@@ -5,11 +5,11 @@
        Warm, cream-tinted for soft neo-brutalism
        =========================================== */
 
-    --color-base-0: hsl(45deg, 30%, 99%);
-    --color-base-1: hsl(45deg, 20%, 96%);
-    --color-base-2: hsl(45deg, 15%, 92%);
-    --color-base-3: hsl(45deg, 12%, 86%);
-    --color-base-4: hsl(45deg, 10%, 78%);
+    --color-base-0: #fff;
+    --color-base-1: hsl(45deg, 20%, 97%);
+    --color-base-2: hsl(45deg, 15%, 94%);
+    --color-base-3: hsl(45deg, 12%, 88%);
+    --color-base-4: hsl(45deg, 10%, 80%);
 
     --color-text-0: hsl(30deg, 15%, 18%);
     --color-text-1: hsl(30deg, 10%, 44%);

@@ -23,6 +23,7 @@
     "scripts": {
         "dev": "vite --host",
         "build": "NODE_ENV=production vite build",
+        "build:site": "vite build --config vite.site.config.ts",
         "lint": "eslint . --cache --max-warnings=0",
         "version": "npm run build",
         "postversion": "npm publish --access=public && git push --tags origin main"

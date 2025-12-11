@@ -1,5 +1,13 @@
 <template>
+    <div
+        ref="trigger"
+        class="ContextMenuTrigger"
+        @click="onTriggerClick"
+        @contextmenu="onTriggerContextMenu">
+        <slot />
+    </div>
     <ContextPopup
+        v-if="isOpen"
         :dir="dir"
         :align="align"
         :anchorRef="anchorRef"
@@ -128,12 +136,17 @@ export default {
             type: Boolean,
             default: true,
         },
+        trigger: {
+            type: String,
+            default: 'click',
+        },
     },
 
-    emits: ['hide'],
+    emits: ['hide', 'select'],
 
     data() {
         return {
+            isOpen: false,
             listNav: new ListNavController({
                 selector: '[data-menu-item-id]',
                 resolveId: function (el) {
@@ -160,6 +173,25 @@ export default {
     },
 
     methods: {
+
+        onTriggerClick(event) {
+            if (this.trigger === 'click') {
+                event.stopPropagation();
+                this.show();
+            }
+        },
+
+        onTriggerContextMenu(event) {
+            if (this.trigger === 'contextmenu') {
+                event.preventDefault();
+                event.stopPropagation();
+                this.show();
+            }
+        },
+
+        show() {
+            this.isOpen = true;
+        },
 
         initialize() {
             this.listNav.mount(this.$refs.menu);
@@ -190,6 +222,8 @@ export default {
             if (!hasAction) {
                 return;
             }
+
+            this.$emit('select', item);
 
             if (item.activate) {
                 item.activate();
@@ -230,6 +264,7 @@ export default {
         },
 
         hide() {
+            this.isOpen = false;
             this.$emit('hide');
         },
 
@@ -239,6 +274,10 @@ export default {
 </script>
 
 <style scoped>
+.ContextMenuTrigger {
+    display: inline-block;
+}
+
 .ContextMenu {
     --ContextMenu-bg: var(--color-base-0);
     --ContextMenu-border: var(--color-base-4);

@@ -74,6 +74,11 @@ export default {
 
 <style scoped>
 
+.Root {
+    background: var(--background-color);
+    min-height: 100vh;
+}
+
 .Header {
     position: fixed;
     top: var(--sp2);

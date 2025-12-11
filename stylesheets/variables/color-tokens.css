@@ -159,37 +159,35 @@
 
     /* ===========================================
        DARK THEME BASE & TEXT COLORS
-       Warm-tinted darks to match light theme's warmth
-       Better contrast for WCAG AA compliance
+       Clean, modern dark with subtle cool tint
        =========================================== */
 
-    /* Slightly warmer dark backgrounds (matching light theme's warm tint) */
-    --color-base-0: hsl(30deg, 8%, 10%);
-    --color-base-1: hsl(30deg, 6%, 14%);
-    --color-base-2: hsl(30deg, 5%, 18%);
-    --color-base-3: hsl(30deg, 4%, 26%);
-    --color-base-4: hsl(30deg, 4%, 36%);
+    --color-base-0: hsl(220deg, 15%, 8%);
+    --color-base-1: hsl(220deg, 12%, 12%);
+    --color-base-2: hsl(220deg, 10%, 16%);
+    --color-base-3: hsl(220deg, 8%, 24%);
+    --color-base-4: hsl(220deg, 6%, 34%);
 
-    /* High contrast text - WCAG AA compliant */
-    --color-text-0: hsl(40deg, 15%, 95%);
-    --color-text-1: hsl(35deg, 10%, 78%);
-    --color-text-2: hsl(30deg, 8%, 62%);
-    --color-text-3: hsl(30deg, 6%, 48%);
-    --color-text-4: hsl(30deg, 5%, 40%);
+    /* High contrast text */
+    --color-text-0: hsl(0deg, 0%, 96%);
+    --color-text-1: hsl(220deg, 5%, 75%);
+    --color-text-2: hsl(220deg, 5%, 55%);
+    --color-text-3: hsl(220deg, 5%, 42%);
+    --color-text-4: hsl(220deg, 5%, 32%);
 
     /* ===========================================
        DARK THEME ALPHA VARIANTS
        =========================================== */
 
-    --color-black-a5: hsla(0, 0%, 0%, 0.2);
-    --color-black-a10: hsla(0, 0%, 0%, 0.3);
-    --color-black-a20: hsla(0, 0%, 0%, 0.4);
-    --color-black-a40: hsla(0, 0%, 0%, 0.55);
+    --color-black-a5: hsla(0, 0%, 0%, 0.25);
+    --color-black-a10: hsla(0, 0%, 0%, 0.35);
+    --color-black-a20: hsla(0, 0%, 0%, 0.45);
+    --color-black-a40: hsla(0, 0%, 0%, 0.6);
 
-    --color-white-a5: hsla(40, 20%, 100%, 0.04);
-    --color-white-a10: hsla(40, 20%, 100%, 0.08);
-    --color-white-a20: hsla(40, 20%, 100%, 0.15);
-    --color-white-a40: hsla(40, 20%, 100%, 0.28);
+    --color-white-a5: hsla(0, 0%, 100%, 0.05);
+    --color-white-a10: hsla(0, 0%, 100%, 0.1);
+    --color-white-a20: hsla(0, 0%, 100%, 0.18);
+    --color-white-a40: hsla(0, 0%, 100%, 0.32);
 
     /* ===========================================
        DARK THEME SURFACE HIERARCHY
@@ -214,52 +212,52 @@
 
     /* ===========================================
        DARK THEME SEMANTIC COLORS
-       Brighter and more saturated for dark backgrounds
+       Vibrant colors that pop on dark backgrounds
        =========================================== */
 
-    /* Primary - Magenta/Pink (matching light theme hue) */
-    --color-primary-0: hsl(310deg, 70%, 82%);
-    --color-primary-1: hsl(310deg, 68%, 72%);
-    --color-primary-2: hsl(310deg, 65%, 62%);
-    --color-primary-3: hsl(310deg, 60%, 52%);
-    --color-primary-4: hsl(310deg, 55%, 40%);
+    /* Primary - Magenta/Pink */
+    --color-primary-0: hsl(310deg, 75%, 85%);
+    --color-primary-1: hsl(310deg, 72%, 72%);
+    --color-primary-2: hsl(310deg, 68%, 60%);
+    --color-primary-3: hsl(310deg, 64%, 48%);
+    --color-primary-4: hsl(310deg, 55%, 35%);
 
     /* Secondary - Purple */
-    --color-secondary-0: hsl(290deg, 55%, 84%);
-    --color-secondary-1: hsl(290deg, 52%, 74%);
-    --color-secondary-2: hsl(290deg, 50%, 68%);
-    --color-secondary-3: hsl(290deg, 48%, 58%);
-    --color-secondary-4: hsl(290deg, 45%, 42%);
+    --color-secondary-0: hsl(280deg, 65%, 85%);
+    --color-secondary-1: hsl(280deg, 60%, 72%);
+    --color-secondary-2: hsl(280deg, 55%, 65%);
+    --color-secondary-3: hsl(280deg, 50%, 55%);
+    --color-secondary-4: hsl(280deg, 45%, 40%);
 
     /* Tertiary - Teal */
-    --color-tertiary-0: hsl(176deg, 55%, 82%);
-    --color-tertiary-1: hsl(176deg, 52%, 72%);
-    --color-tertiary-2: hsl(176deg, 50%, 60%);
-    --color-tertiary-3: hsl(176deg, 48%, 50%);
-    --color-tertiary-4: hsl(176deg, 40%, 35%);
+    --color-tertiary-0: hsl(176deg, 60%, 80%);
+    --color-tertiary-1: hsl(176deg, 55%, 65%);
+    --color-tertiary-2: hsl(176deg, 50%, 55%);
+    --color-tertiary-3: hsl(176deg, 45%, 45%);
+    --color-tertiary-4: hsl(176deg, 40%, 32%);
 
     /* Success - Green */
-    --color-success-0: hsl(96deg, 55%, 82%);
-    --color-success-1: hsl(96deg, 52%, 72%);
-    --color-success-2: hsl(96deg, 50%, 60%);
-    --color-success-3: hsl(96deg, 48%, 50%);
-    --color-success-4: hsl(96deg, 40%, 35%);
+    --color-success-0: hsl(142deg, 60%, 80%);
+    --color-success-1: hsl(142deg, 55%, 65%);
+    --color-success-2: hsl(142deg, 50%, 55%);
+    --color-success-3: hsl(142deg, 45%, 45%);
+    --color-success-4: hsl(142deg, 40%, 32%);
 
-    /* Warning - Orange/Amber */
-    --color-warning-0: hsl(42deg, 90%, 85%);
-    --color-warning-1: hsl(40deg, 88%, 72%);
-    --color-warning-2: hsl(38deg, 85%, 60%);
-    --color-warning-3: hsl(36deg, 82%, 52%);
-    --color-warning-4: hsl(34deg, 75%, 38%);
+    /* Warning - Amber */
+    --color-warning-0: hsl(45deg, 95%, 82%);
+    --color-warning-1: hsl(42deg, 90%, 65%);
+    --color-warning-2: hsl(38deg, 85%, 55%);
+    --color-warning-3: hsl(35deg, 80%, 48%);
+    --color-warning-4: hsl(32deg, 70%, 35%);
 
     /* Danger - Red */
-    --color-danger-0: hsl(355deg, 85%, 88%);
-    --color-danger-1: hsl(352deg, 82%, 74%);
-    --color-danger-2: hsl(350deg, 80%, 65%);
-    --color-danger-3: hsl(348deg, 78%, 58%);
-    --color-danger-4: hsl(345deg, 65%, 42%);
+    --color-danger-0: hsl(0deg, 85%, 85%);
+    --color-danger-1: hsl(0deg, 80%, 70%);
+    --color-danger-2: hsl(0deg, 75%, 60%);
+    --color-danger-3: hsl(0deg, 70%, 52%);
+    --color-danger-4: hsl(0deg, 60%, 38%);
 
     /* Shadow color for dark theme */
-    --shadow-color: hsla(0, 0%, 0%, 0.5);
+    --shadow-color: hsla(220, 50%, 5%, 0.7);
 
 }

@@ -1,253 +1,236 @@
 <template>
-    <div
-        ref="trigger"
-        class="ContextMenu"
-        @click="onTriggerClick"
-        @contextmenu="onContextMenu">
-        <slot />
-        <Teleport to="body">
+    <ContextPopup
+        :dir="dir"
+        :align="align"
+        :anchorRef="anchorRef"
+        :atCursor="atCursor"
+        :anchorDir="anchorDir"
+        @hide="hide()"
+        @ready="initialize()">
+        <div
+            ref="menu"
+            class="ContextMenu"
+            :class="{
+                'ContextMenu-search': search,
+            }">
+            <InputText
+                v-if="search"
+                ref="search"
+                v-model="searchQuery"
+                autoFocus
+                class="ContextMenuSearch"
+                icon="fas fa-search"
+                placeholder="Search"
+                data-menu-item-id="#"
+                @update:modelValue="doSearch()"
+                @keydown.enter="activate()" />
             <div
-                v-if="isOpen"
-                ref="overlay"
-                class="ContextMenuOverlay"
-                @click="close"
-                @contextmenu.prevent="close" />
-            <div
-                v-if="isOpen"
-                ref="menu"
-                class="ContextMenuPopup"
-                :style="menuStyle"
-                @keydown="onKeyDown">
+                class="ContextMenuItems"
+                @keydown.backspace="selectSearch()">
                 <template
-                    v-for="(item, index) in items"
-                    :key="index">
+                    v-for="(item, i) in filteredItems"
+                    :key="i">
                     <div
-                        v-if="item.divider"
+                        v-if="item.kind === 'separator' || item.divider"
                         class="ContextMenuDivider" />
+                    <div
+                        v-else-if="item.kind === 'title'"
+                        class="ContextMenuSectionTitle"
+                        v-text="getItemTitle(item)" />
                     <div
                         v-else
                         class="ContextMenuItem"
-                        :class="{
-                            'ContextMenuItem-disabled': item.disabled,
-                            'ContextMenuItem-focused': focusedIndex === index,
-                        }"
+                        :class="[
+                            {
+                                'ContextMenuItem-selected': isItemSelected(i),
+                                'ContextMenuItem-disabled': item.disabled,
+                                'ContextMenuItem-checked': item.checked,
+                            },
+                            item.kind ? `ContextMenuItem-${item.kind}` : ''
+                        ]"
+                        :data-menu-item-id="i"
                         tabindex="0"
-                        @click="selectItem(item, index)"
-                        @mouseenter="focusedIndex = index">
-                        <i
-                            v-if="item.icon"
-                            :class="item.icon"
-                            class="ContextMenuItemIcon" />
-                        <span class="ContextMenuItemLabel">{{ item.label }}</span>
+                        :title="getItemTitle(item)"
+                        @click="activateItem(item)"
+                        @keydown.enter="activateItem(item)">
+                        <div class="ContextMenuItemLine">
+                            <i
+                                v-if="item.icon"
+                                :class="item.icon"
+                                class="ContextMenuItemIcon" />
+                            <div class="ContextMenuItemTitle">
+                                {{ getItemTitle(item) }}
+                            </div>
+                            <i
+                                v-if="item.checked"
+                                class="fas fa-check fa-sm" />
+                        </div>
+                        <div
+                            v-if="item.description"
+                            class="ContextMenuItemDescription">
+                            {{ item.description }}
+                        </div>
                     </div>
                 </template>
             </div>
-        </Teleport>
-    </div>
+        </div>
+    </ContextPopup>
 </template>
 
 <script>
+import { ListNavController } from '../controllers/ListNavController.js';
+import ContextPopup from './ContextPopup.vue';
+import InputText from './InputText.vue';
+
 export default {
 
+    components: {
+        ContextPopup,
+        InputText,
+    },
+
     props: {
+        dir: {
+            type: String,
+            default: 'v',
+        },
+        align: {
+            type: String,
+            default: 'auto',
+        },
+        size: {
+            type: String,
+            default: undefined,
+        },
         items: {
             type: Array,
             default: function () {
                 return [];
             },
         },
-        trigger: {
-            type: String,
-            default: 'contextmenu',
-            validator: function (value) {
-                return ['click', 'contextmenu'].includes(value);
-            },
+        atCursor: {
+            type: Boolean,
+            default: false,
         },
-        position: {
+        anchorRef: {
             type: String,
-            default: 'auto',
+            default: undefined,
+        },
+        anchorDir: {
+            type: String,
+            default: 'middle',
+        },
+        search: {
+            type: Boolean,
+            default: false,
+        },
+        autoDismiss: {
+            type: Boolean,
+            default: true,
         },
     },
 
-    emits: ['select', 'open', 'close'],
+    emits: ['hide'],
 
     data() {
         return {
-            isOpen: false,
-            menuX: 0,
-            menuY: 0,
-            focusedIndex: -1,
+            listNav: new ListNavController({
+                selector: '[data-menu-item-id]',
+                resolveId: function (el) {
+                    return el.getAttribute('data-menu-item-id') || '';
+                },
+            }),
+            searchQuery: '',
+            filteredItems: this.items,
         };
     },
 
-    computed: {
-
-        menuStyle() {
-            return {
-                left: this.menuX + 'px',
-                top: this.menuY + 'px',
-            };
+    watch: {
+        items: {
+            handler: function (newItems) {
+                this.filteredItems = newItems;
+                this.searchQuery = '';
+            },
+            immediate: true,
         },
-
-        selectableItems() {
-            const result = [];
-            for (let i = 0; i < this.items.length; i++) {
-                const item = this.items[i];
-                if (!item.divider && !item.disabled) {
-                    result.push({ item: item, index: i });
-                }
-            }
-            return result;
-        },
-
-    },
-
-    mounted() {
-        this.handleDocumentKeyDown = this.onDocumentKeyDown.bind(this);
-        document.addEventListener('keydown', this.handleDocumentKeyDown);
     },
 
     unmounted() {
-        document.removeEventListener('keydown', this.handleDocumentKeyDown);
+        this.listNav.destroy();
     },
 
     methods: {
 
-        onTriggerClick(event) {
-            if (this.trigger === 'click') {
-                event.preventDefault();
-                event.stopPropagation();
-                this.openAt(event.clientX, event.clientY);
+        initialize() {
+            this.listNav.mount(this.$refs.menu);
+        },
+
+        isItemSelected(i) {
+            return this.listNav.selection.isSelected(String(i));
+        },
+
+        getItemTitle(item) {
+            return item.title || item.label || '';
+        },
+
+        activate() {
+            const idx = this.listNav.selection.getFirst();
+            const item = this.filteredItems[idx];
+            if (item) {
+                this.activateItem(item);
             }
         },
 
-        onContextMenu(event) {
-            if (this.trigger === 'contextmenu') {
-                event.preventDefault();
-                event.stopPropagation();
-                this.openAt(event.clientX, event.clientY);
-            }
-        },
-
-        openAt(x, y) {
-            this.menuX = x;
-            this.menuY = y;
-            this.focusedIndex = -1;
-            this.isOpen = true;
-            this.$emit('open');
-
-            this.$nextTick(function () {
-                this.adjustPosition();
-            });
-        },
-
-        adjustPosition() {
-            const menu = this.$refs.menu;
-            if (!menu) {
-                return;
-            }
-
-            const rect = menu.getBoundingClientRect();
-            const viewportWidth = window.innerWidth;
-            const viewportHeight = window.innerHeight;
-
-            if (rect.right > viewportWidth) {
-                this.menuX = Math.max(8, viewportWidth - rect.width - 8);
-            }
-
-            if (rect.bottom > viewportHeight) {
-                this.menuY = Math.max(8, viewportHeight - rect.height - 8);
-            }
-        },
-
-        close() {
-            if (this.isOpen) {
-                this.isOpen = false;
-                this.$emit('close');
-            }
-        },
-
-        selectItem(item, index) {
+        activateItem(item) {
             if (item.disabled) {
                 return;
             }
 
-            this.$emit('select', item, index);
+            const hasAction = item.activate || item.action;
+            if (!hasAction) {
+                return;
+            }
 
-            if (item.action && typeof item.action === 'function') {
+            if (item.activate) {
+                item.activate();
+            } else if (item.action) {
                 item.action(item);
             }
 
-            this.close();
+            if (this.autoDismiss) {
+                this.hide();
+            } else {
+                item.checked = !item.checked;
+            }
         },
 
-        onKeyDown(event) {
-            if (!this.isOpen) {
+        doSearch() {
+            const q = this.searchQuery.trim().toLowerCase();
+            if (!q) {
+                this.filteredItems = this.items;
                 return;
             }
-
-            switch (event.key) {
-                case 'ArrowDown':
-                    event.preventDefault();
-                    this.focusNext();
-                    break;
-                case 'ArrowUp':
-                    event.preventDefault();
-                    this.focusPrevious();
-                    break;
-                case 'Enter':
-                case ' ':
-                    event.preventDefault();
-                    if (this.focusedIndex >= 0 && this.focusedIndex < this.items.length) {
-                        this.selectItem(this.items[this.focusedIndex], this.focusedIndex);
-                    }
-                    break;
-                case 'Escape':
-                    event.preventDefault();
-                    this.close();
-                    break;
-            }
-        },
-
-        onDocumentKeyDown(event) {
-            if (this.isOpen && event.key === 'Escape') {
-                event.preventDefault();
-                this.close();
-            }
-        },
-
-        focusNext() {
-            if (this.selectableItems.length === 0) {
-                return;
-            }
-
-            let currentPos = -1;
-            for (let i = 0; i < this.selectableItems.length; i++) {
-                if (this.selectableItems[i].index === this.focusedIndex) {
-                    currentPos = i;
-                    break;
+            const results = [];
+            for (const item of this.items) {
+                const title = this.getItemTitle(item).toLowerCase();
+                if (title.includes(q)) {
+                    results.push(item);
                 }
             }
-
-            const nextPos = (currentPos + 1) % this.selectableItems.length;
-            this.focusedIndex = this.selectableItems[nextPos].index;
+            this.filteredItems = results;
         },
 
-        focusPrevious() {
-            if (this.selectableItems.length === 0) {
-                return;
-            }
-
-            let currentPos = -1;
-            for (let i = 0; i < this.selectableItems.length; i++) {
-                if (this.selectableItems[i].index === this.focusedIndex) {
-                    currentPos = i;
-                    break;
+        selectSearch() {
+            if (this.$refs.search) {
+                const input = this.$refs.search.$el.querySelector('input');
+                if (input) {
+                    input.focus();
                 }
             }
+        },
 
-            const prevPos = currentPos <= 0 ? this.selectableItems.length - 1 : currentPos - 1;
-            this.focusedIndex = this.selectableItems[prevPos].index;
+        hide() {
+            this.$emit('hide');
         },
 
     },
@@ -257,73 +240,52 @@ export default {
 
 <style scoped>
 .ContextMenu {
-    display: inline-block;
-    position: relative;
-}
-
-.ContextMenuOverlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 9998;
-}
-
-.ContextMenuPopup {
     --ContextMenu-bg: var(--color-base-0);
     --ContextMenu-border: var(--color-base-4);
     --ContextMenu-shadow: var(--shadow-brutal-sm);
     --ContextMenu-item-hover: var(--color-base-2);
     --ContextMenu-item-focus: var(--color-primary-a10);
 
-    position: fixed;
-    z-index: 9999;
-    min-width: 160px;
-    max-width: 280px;
-    padding: var(--sp0-5) 0;
-
-    background: var(--ContextMenu-bg);
-    border: 2px solid var(--ContextMenu-border);
-    border-radius: var(--border-radius);
-    box-shadow: var(--ContextMenu-shadow);
-
-    animation: contextMenuFadeIn 0.15s ease-out;
+    display: flex;
+    flex-flow: column nowrap;
+    min-width: 200px;
+    max-height: 40vh;
 }
 
-@keyframes contextMenuFadeIn {
-    from {
-        opacity: 0;
-        transform: scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+.ContextMenu-search {
+    width: 240px;
+}
+
+.ContextMenuSearch {
+    flex: 0 0 auto;
+}
+
+.ContextMenuItems {
+    overflow-y: auto;
+    padding: var(--sp0-5) 0;
 }
 
 .ContextMenuItem {
     display: flex;
-    align-items: center;
-    gap: var(--sp1-5);
+    flex-flow: column nowrap;
+    gap: var(--sp0-5);
     padding: var(--sp1) var(--sp2);
-
     cursor: pointer;
     user-select: none;
-    outline: none;
-
+    outline: 0;
     transition: background-color 0.1s ease;
 }
 
-.ContextMenuItem:hover,
-.ContextMenuItem-focused {
-    background: var(--ContextMenu-item-hover);
+.ContextMenuItem-primary {
+    color: var(--color-primary);
 }
 
-.ContextMenuItem:focus-visible,
-.ContextMenuItem-focused:focus-visible {
-    background: var(--ContextMenu-item-focus);
-    outline: none;
+.ContextMenuItem-danger {
+    color: var(--color-danger);
+}
+
+.ContextMenuItem-checked {
+    color: var(--color-primary);
 }
 
 .ContextMenuItem-disabled {
@@ -332,8 +294,48 @@ export default {
     pointer-events: none;
 }
 
+.ContextMenuItem:hover,
+.ContextMenuItem-selected {
+    background: var(--ContextMenu-item-hover);
+}
+
+.ContextMenuItems:focus-within .ContextMenuItem.ContextMenuItem-selected {
+    background: var(--ContextMenu-item-focus);
+}
+
+.ContextMenuDivider {
+    margin: var(--sp0-5) 0;
+    border-top: 1px solid var(--color-base-3);
+}
+
+.ContextMenuSectionTitle {
+    padding: var(--sp1) var(--sp2);
+    color: var(--color-text-2);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-small);
+    text-transform: uppercase;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.ContextMenuItemLine {
+    display: flex;
+    align-items: center;
+    gap: var(--sp1-5);
+}
+
+.ContextMenuItemTitle {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: var(--font-size);
+    color: var(--color-text-0);
+}
+
 .ContextMenuItemIcon {
-    flex-shrink: 0;
+    flex: 0 0 var(--sp2);
     width: var(--sp2);
     display: flex;
     align-items: center;
@@ -342,24 +344,12 @@ export default {
     color: var(--color-text-1);
 }
 
-.ContextMenuItemLabel {
-    flex: 1;
-    font-size: var(--font-size);
-    color: var(--color-text-0);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.ContextMenuDivider {
-    margin: var(--sp0-5) 0;
-    border-top: 1px solid var(--color-base-3);
+.ContextMenuItemDescription {
+    font-size: var(--font-size-small);
+    color: var(--color-text-2);
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .ContextMenuPopup {
-        animation: none;
-    }
     .ContextMenuItem {
         transition: none;
     }

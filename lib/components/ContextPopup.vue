@@ -7,7 +7,7 @@
                 'Overlay-shown': overlayShown,
             }"
             @click.stop="hide()">
-            <Bubble
+            <PopupBubble
                 v-if="ready"
                 :dir="actualDir"
                 :align="actualAlign"
@@ -17,7 +17,7 @@
                 @mouseleave="$emit('mouseleave')"
                 @click.stop="">
                 <slot />
-            </Bubble>
+            </PopupBubble>
         </div>
     </teleport>
 </template>
@@ -25,8 +25,13 @@
 <script>
 import { getAnchorPoint } from '../utils/dom.js';
 import { ShortcutHandler } from '../utils/shortcuts.js';
+import PopupBubble from './PopupBubble.vue';
 
 export default {
+
+    components: {
+        PopupBubble,
+    },
 
     inject: [
         'ui',

@@ -32,6 +32,7 @@ import LoadingScreen from './LoadingScreen.vue';
 import Notification from './Notification.vue';
 import Notifications from './Notifications.vue';
 import Panel from './Panel.vue';
+import PopupBubble from './PopupBubble.vue';
 import ProgressBar from './ProgressBar.vue';
 import ProgressIcon from './ProgressIcon.vue';
 import RelDate from './RelDate.vue';
@@ -91,6 +92,7 @@ export {
     Notification,
     Notifications,
     Panel,
+    PopupBubble,
     ProgressBar,
     ProgressIcon,
     RelDate,

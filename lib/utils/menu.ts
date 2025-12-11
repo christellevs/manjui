@@ -8,4 +8,7 @@ export interface MenuItem {
     checked?: boolean;
     disabled?: boolean;
     activate?: () => void;
+    label?: string;
+    action?: (item?: MenuItem) => void;
+    divider?: boolean;
 }

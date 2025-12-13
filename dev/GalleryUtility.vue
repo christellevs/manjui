@@ -5,6 +5,181 @@
             Utility components for common UI patterns including context menus, tooltips, dates, and drag-and-drop.
         </TextBlock>
 
+        <!-- Avatar -->
+        <Subtitle>Avatar</Subtitle>
+        <TextBlock>User/entity avatar with image or initials fallback. Neo-brutal style with colored borders and shadows.</TextBlock>
+
+        <HGroup wrap gap="3" align="end">
+            <VGroup gap="1" align="center">
+                <Avatar
+                    src="https://i.pravatar.cc/100?u=1"
+                    alt="John Doe"
+                    size="small"
+                    kind="primary"
+                    hoverable />
+                <span class="DemoLabel">Small</span>
+            </VGroup>
+            <VGroup gap="1" align="center">
+                <Avatar
+                    src="https://i.pravatar.cc/100?u=2"
+                    alt="Jane Smith"
+                    size="normal"
+                    kind="secondary"
+                    hoverable />
+                <span class="DemoLabel">Normal</span>
+            </VGroup>
+            <VGroup gap="1" align="center">
+                <Avatar
+                    src="https://i.pravatar.cc/100?u=3"
+                    alt="Bob Wilson"
+                    size="large"
+                    kind="tertiary"
+                    hoverable />
+                <span class="DemoLabel">Large</span>
+            </VGroup>
+        </HGroup>
+
+        <HGroup wrap gap="3" align="end" class="DemoMarginTop">
+            <VGroup gap="1" align="center">
+                <Avatar
+                    name="Default"
+                    kind="default"
+                    hoverable />
+                <span class="DemoLabel">Default</span>
+            </VGroup>
+            <VGroup gap="1" align="center">
+                <Avatar
+                    name="Primary"
+                    kind="primary"
+                    hoverable />
+                <span class="DemoLabel">Primary</span>
+            </VGroup>
+            <VGroup gap="1" align="center">
+                <Avatar
+                    name="Secondary"
+                    kind="secondary"
+                    hoverable />
+                <span class="DemoLabel">Secondary</span>
+            </VGroup>
+            <VGroup gap="1" align="center">
+                <Avatar
+                    name="Tertiary"
+                    kind="tertiary"
+                    hoverable />
+                <span class="DemoLabel">Tertiary</span>
+            </VGroup>
+            <VGroup gap="1" align="center">
+                <Avatar
+                    name="Success"
+                    kind="success"
+                    hoverable />
+                <span class="DemoLabel">Success</span>
+            </VGroup>
+            <VGroup gap="1" align="center">
+                <Avatar
+                    name="Warning"
+                    kind="warning"
+                    hoverable />
+                <span class="DemoLabel">Warning</span>
+            </VGroup>
+            <VGroup gap="1" align="center">
+                <Avatar
+                    name="Danger"
+                    kind="danger"
+                    hoverable />
+                <span class="DemoLabel">Danger</span>
+            </VGroup>
+        </HGroup>
+
+        <HGroup wrap gap="3" align="end" class="DemoMarginTop">
+            <VGroup gap="1" align="center">
+                <Avatar
+                    icon="fas fa-building"
+                    kind="tertiary"
+                    shape="rounded"
+                    hoverable />
+                <span class="DemoLabel">Rounded</span>
+            </VGroup>
+            <VGroup gap="1" align="center">
+                <Avatar
+                    icon="fas fa-star"
+                    kind="warning"
+                    shape="square"
+                    hoverable />
+                <span class="DemoLabel">Square</span>
+            </VGroup>
+            <VGroup gap="1" align="center">
+                <Avatar
+                    icon="fas fa-heart"
+                    kind="danger"
+                    shape="circle"
+                    hoverable />
+                <span class="DemoLabel">Circle</span>
+            </VGroup>
+        </HGroup>
+
+        <!-- Badge -->
+        <Subtitle>Badge</Subtitle>
+        <TextBlock>Status indicators and count badges with various styles.</TextBlock>
+
+        <HGroup wrap gap="2" align="center">
+            <Badge value="New" kind="default" />
+            <Badge value="5" kind="primary" />
+            <Badge value="Hot" kind="secondary" />
+            <Badge value="Done" kind="success" />
+            <Badge value="!" kind="warning" />
+            <Badge value="Error" kind="danger" />
+        </HGroup>
+
+        <HGroup wrap gap="2" align="center" class="DemoMarginTop">
+            <Badge value="Small" kind="primary" size="small" />
+            <Badge value="Normal" kind="primary" size="normal" />
+            <Badge value="Large" kind="primary" size="large" />
+        </HGroup>
+
+        <HGroup wrap gap="2" align="center" class="DemoMarginTop">
+            <Badge value="Pill" kind="secondary" pill />
+            <Badge kind="success" dot />
+            <Badge kind="danger" dot size="large" />
+            <HGroup gap="1" align="center">
+                <span>Status</span>
+                <Badge kind="success" dot />
+            </HGroup>
+            <HGroup gap="1" align="center">
+                <span>Notifications</span>
+                <Badge value="12" kind="danger" pill />
+            </HGroup>
+        </HGroup>
+
+        <!-- CopyToClipboard -->
+        <Subtitle>CopyToClipboard</Subtitle>
+        <TextBlock>Copy-to-clipboard button with visual feedback.</TextBlock>
+
+        <HGroup wrap gap="3" align="center">
+            <HGroup gap="1" align="center">
+                <InputText
+                    v-model="copyValue"
+                    label="Copy this text"
+                    readonly />
+                <CopyToClipboard :value="copyValue" />
+            </HGroup>
+
+            <HGroup gap="1" align="center">
+                <span>With label:</span>
+                <CopyToClipboard
+                    value="Hello World!"
+                    showLabel />
+            </HGroup>
+
+            <HGroup gap="1" align="center">
+                <span>API Key:</span>
+                <code class="DemoCode">sk-abc123xyz</code>
+                <CopyToClipboard
+                    value="sk-abc123xyz"
+                    kind="primary" />
+            </HGroup>
+        </HGroup>
+
         <!-- ContextMenu -->
         <Subtitle>ContextMenu</Subtitle>
         <TextBlock>Right-click or dropdown context menu with keyboard navigation.</TextBlock>
@@ -429,14 +604,18 @@
 </template>
 
 <script>
+import Avatar from '../lib/components/Avatar.vue';
+import Badge from '../lib/components/Badge.vue';
 import Box from '../lib/components/Box.vue';
 import Btn from '../lib/components/Btn.vue';
 import Bubble from '../lib/components/Bubble.vue';
 import ContextHelp from '../lib/components/ContextHelp.vue';
 import ContextMenu from '../lib/components/ContextMenu.vue';
+import CopyToClipboard from '../lib/components/CopyToClipboard.vue';
 import DragHelper from '../lib/components/DragHelper.vue';
 import FormattedDate from '../lib/components/FormattedDate.vue';
 import HGroup from '../lib/components/HGroup.vue';
+import InputText from '../lib/components/InputText.vue';
 import ProgressIcon from '../lib/components/ProgressIcon.vue';
 import RelDate from '../lib/components/RelDate.vue';
 import Subtitle from '../lib/components/Subtitle.vue';
@@ -448,14 +627,18 @@ import VGroup from '../lib/components/VGroup.vue';
 export default {
 
     components: {
+        Avatar,
+        Badge,
         Box,
         Btn,
         Bubble,
         ContextHelp,
         ContextMenu,
+        CopyToClipboard,
         DragHelper,
         FormattedDate,
         HGroup,
+        InputText,
         ProgressIcon,
         RelDate,
         Subtitle,
@@ -468,6 +651,7 @@ export default {
     data() {
         const now = Date.now();
         return {
+            copyValue: 'Copy me to clipboard!',
             menuItems: [
                 { label: 'Edit', icon: 'fa-solid fa-pen', action: function () { /* noop */ } },
                 { label: 'Duplicate', icon: 'fa-solid fa-copy', action: function () { /* noop */ } },
@@ -628,5 +812,13 @@ export default {
     justify-content: center;
     border-style: dashed;
     color: var(--color-text-2);
+}
+
+.DemoCode {
+    padding: var(--sp0-5) var(--sp);
+    background: var(--color-base-2);
+    border-radius: var(--border-radius-small);
+    font-family: var(--font-monospace);
+    font-size: var(--font-size-small);
 }
 </style>

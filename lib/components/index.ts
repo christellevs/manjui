@@ -1,3 +1,5 @@
+import Avatar from './Avatar.vue';
+import Badge from './Badge.vue';
 import Box from './Box.vue';
 import Btn from './Btn.vue';
 import Bubble from './Bubble.vue';
@@ -8,6 +10,7 @@ import Container from './Container.vue';
 import ContextHelp from './ContextHelp.vue';
 import ContextMenu from './ContextMenu.vue';
 import ContextPopup from './ContextPopup.vue';
+import CopyToClipboard from './CopyToClipboard.vue';
 import DataTable from './DataTable.vue';
 import Divider from './Divider.vue';
 import DragHelper from './DragHelper.vue';
@@ -29,6 +32,7 @@ import Link from './Link.vue';
 import ListItem from './ListItem.vue';
 import LoadingAnimation from './LoadingAnimation.vue';
 import LoadingScreen from './LoadingScreen.vue';
+import Modal from './Modal.vue';
 import Notification from './Notification.vue';
 import Notifications from './Notifications.vue';
 import Panel from './Panel.vue';
@@ -58,6 +62,8 @@ import TreeViewItem from './TreeViewItem.vue';
 import VGroup from './VGroup.vue';
 
 export {
+    Avatar,
+    Badge,
     Box,
     Btn,
     Bubble,
@@ -68,6 +74,7 @@ export {
     ContextHelp,
     ContextMenu,
     ContextPopup,
+    CopyToClipboard,
     DataTable,
     Divider,
     DragHelper,
@@ -89,6 +96,7 @@ export {
     ListItem,
     LoadingAnimation,
     LoadingScreen,
+    Modal,
     Notification,
     Notifications,
     Panel,

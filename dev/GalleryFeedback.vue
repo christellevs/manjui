@@ -168,12 +168,60 @@
                     :visible="loadingVisible"
                     message="Loading your content..." />
             </section>
+
+            <!-- Modal -->
+            <section>
+                <h3>Modal</h3>
+                <HGroup wrap gap="2">
+                    <Btn
+                        label="Open Small Modal"
+                        kind="default"
+                        @click="showModal('small')" />
+                    <Btn
+                        label="Open Normal Modal"
+                        kind="primary"
+                        @click="showModal('normal')" />
+                    <Btn
+                        label="Open Large Modal"
+                        kind="secondary"
+                        @click="showModal('large')" />
+                </HGroup>
+                <Modal
+                    v-model="modalVisible"
+                    :title="modalTitle"
+                    :size="modalSize">
+                    <VGroup gap="2">
+                        <TextBlock>This is a {{ modalSize }} modal dialog.</TextBlock>
+                        <TextBlock>Click the overlay, press Escape, or use the close button to dismiss.</TextBlock>
+                    </VGroup>
+                    <template #footer>
+                        <Btn
+                            label="Cancel"
+                            kind="default"
+                            @click="modalVisible = false" />
+                        <Btn
+                            label="Confirm"
+                            kind="primary"
+                            @click="modalVisible = false" />
+                    </template>
+                </Modal>
+            </section>
         </VGroup>
     </article>
 </template>
 
 <script>
+import Modal from '../lib/components/Modal.vue';
+import TextBlock from '../lib/components/Text.vue';
+import VGroup from '../lib/components/VGroup.vue';
+
 export default {
+
+    components: {
+        Modal,
+        TextBlock,
+        VGroup,
+    },
 
     data() {
         return {
@@ -182,6 +230,9 @@ export default {
             progressIndeterminate: false,
             showError: true,
             loadingVisible: false,
+            modalVisible: false,
+            modalSize: 'normal',
+            modalTitle: 'Modal Title',
         };
     },
 
@@ -215,6 +266,12 @@ export default {
             setTimeout(() => {
                 this.loadingVisible = false;
             }, 2000);
+        },
+
+        showModal(size) {
+            this.modalSize = size;
+            this.modalTitle = size.charAt(0).toUpperCase() + size.slice(1) + ' Modal';
+            this.modalVisible = true;
         },
 
     }

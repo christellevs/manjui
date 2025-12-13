@@ -22,6 +22,7 @@ export default defineConfig({
         vue(),
         dts({
             include: ['lib/**'],
+            tsconfigPath: './tsconfig.build.json',
         }),
     ],
     esbuild: {

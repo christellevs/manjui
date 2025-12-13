@@ -1,0 +1,19 @@
+{
+    "extends": "./tsconfig.base.json",
+    "include": [
+        "lib/**/*.ts",
+        "lib/**/*.vue"
+    ],
+    "compilerOptions": {
+        "declaration": true,
+        "emitDeclarationOnly": true,
+        "outDir": "dist/lib",
+        "lib": [
+            "DOM",
+            "ES2022"
+        ],
+        "types": [
+            "node"
+        ]
+    }
+}
